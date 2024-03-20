@@ -7,27 +7,38 @@ function Navigation() {
     const options = [
         {
             text: 'Login',
-            destination: '/#'
+            destination: '#'
         },
         {
             text: 'Profile',
-            destination: '/#'
+            destination: '#'
         },
         {
             text: 'Search',
-            destination: '/#'
+            destination: '#'
         }
     ]
 
     return (
-        <div className='border-component list-group'>
-            <h1>Navigation</h1>
-            {options.map((option) => {
-                return (
-                    <Link to={option.destination} className="list-group-item list-group-item-action list-group-item-secondary my-1 text-center border border-none rounded">{option.text}</Link>
-                );
-            })}
-        </div>
+        <nav className="navbar navbar-expand-lg sticky-top bg-success-subtle">
+            <div className="container-fluid">
+            <Link className="navbar-brand fs-3" to="#">Auditory</Link>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+            </button>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav">
+                        {options.map((option, index) => {
+                            return (
+                            <li className="nav-item" key={index}>
+                                <Link to={option.destination} className="nav-link fs-4">{option.text}</Link>
+                            </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+            </div>
+        </nav>
     );
 }
 

@@ -4,16 +4,16 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import './index.css';
 
 import Navigation from './Navigation';
-import Feed from './Feed/Feed';
+import Feed from './Feed';
 
 function Home() {
     return (
     <div>
-        <div className="row border-component">
-            <div className="col-2 d-none d-md-block">
+        <div className="">
+            <div className="fixed-top">
                 <Navigation />
             </div>
-            <div className="col">
+            <div className="">
                 <Routes>
                     <Route path="/" element={<Feed />} />
                 </Routes>
