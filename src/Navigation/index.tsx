@@ -1,19 +1,26 @@
 
 import { Link } from 'react-router-dom';
 import React, {useState} from 'react';
+import { useSelector } from 'react-redux';
+import { AuditoryState } from '../store';
 
 function Navigation() {
     const [isCollapsed, setIsCollapsed] = useState(true);
-    const options = [
+    const { isLoggedIn } = useSelector((state:AuditoryState) => state.loginReducer);
+
+    var options = [
         {
             text: 'Login',
-            destination: '#'
+            destination: '/login'
         },
         {
             text: 'Profile',
             destination: '/profile'
         }
     ]
+    if (isLoggedIn) {
+        options = options.slice(1);
+    }
 
     const toggleCollapse = () => {
         setIsCollapsed(!isCollapsed);
