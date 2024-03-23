@@ -11,7 +11,7 @@ function Navigation() {
         },
         {
             text: 'Profile',
-            destination: '#'
+            destination: '/profile'
         }
     ]
 

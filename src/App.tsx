@@ -6,6 +6,7 @@ import Navigation from './Navigation';
 import GenericFeed from './GenericFeed';
 import Messenges from './Messenges';
 import SideBarNavigation from './SideBarNavigation';
+import Profile from './Profile';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './App.css';
@@ -25,6 +26,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<GenericFeed />}></Route>
                 <Route path="messages/*" element={<Messenges />}></Route>
+                <Route path="profile" element={<Profile />}></Route>
             </Routes>
           </div>
         </div>
