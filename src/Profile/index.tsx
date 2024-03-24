@@ -1,7 +1,10 @@
 
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Routes, Route } from 'react-router-dom';
 import { AuditoryState } from "../store";
+import ProfileLinks from "./ProfileLinks";
+import Account from "./Account";
 
 function Profile() {
     const { isLoggedIn } = useSelector((state:AuditoryState) => state.loginReducer);
@@ -9,8 +12,23 @@ function Profile() {
 
     if (isLoggedIn) {
         return (
-            <div className="container-fluid" style={{marginTop: "100px"}}>
-                {userData.username}
+            <div style={{marginTop: "100px"}}>
+                <div className="row ms-3">
+                    <ProfileLinks />
+                    <div className="col-8">
+                        <Routes>
+                            <Route path="/" element={
+                                <Navigate to='account' />
+                            }></Route>
+                            <Route path="account" element={
+                                <Account />} />
+                            <Route path="playlists" element={
+                                <h1>Playlists</h1>} />
+                            <Route path="settings" element={
+                                <h1>Settings</h1>} />
+                        </Routes>
+                    </div>
+                </div>
             </div>
         )
     } else {

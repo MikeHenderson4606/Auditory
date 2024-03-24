@@ -1,6 +1,6 @@
 // Imports
 import React from 'react';
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, useNavigate } from 'react-router-dom';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
@@ -22,31 +22,19 @@ function App() {
           <div className="fixed-top">
             <Navigation />
           </div>
-          <Routes>
-            <Route path="profile" element={<Profile />}></Route>
-            <Route path="login" element={<Login />}></Route>
-            <Route path="/" element={
-              <div className="row">
-                <div className="col-3 mt-4 ">
-                  <SideBarNavigation />
-                </div>
-                <div className="col-8">
-                  <GenericFeed />
-                </div>
-              </div>
-            }></Route>
-            <Route path="messages/*" element={
-              <div className="row">
-                <div className="col-3 mt-4 ">
-                  <SideBarNavigation />
-                </div>
-                <div className="col-8">
-                  <Messenges />
-                </div>
-              </div>
-            }></Route>
-          </Routes>
-          
+          <div className="row">
+            <div className="col-2">
+              <SideBarNavigation />
+            </div>
+            <div className="col-8">
+            <Routes>
+              <Route path="profile/*" element={<Profile />}></Route>
+              <Route path="login" element={<Login />}></Route>
+              <Route path="/" element={<GenericFeed />}></Route>
+              <Route path="messages/*" element={<Messenges />}></Route>
+            </Routes>
+            </div>
+          </div>
         </div>
       </HashRouter>
     </Provider>

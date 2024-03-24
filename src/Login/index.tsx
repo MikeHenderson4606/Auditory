@@ -40,6 +40,8 @@ function Login() {
                             }))
                             dispatch(setLoggedIn());
                             navigate('/profile');
+                        } else {
+                            handleModalShow();
                         }
                     }}>Login</button>
                 </div>
@@ -53,7 +55,6 @@ function Login() {
                 </Modal.Body>
                 <Modal.Footer>
                     <button className='btn btn-danger' onClick={() => {
-                        navigate('/');
                         handleModalShow();
                     }}>
                         Close
