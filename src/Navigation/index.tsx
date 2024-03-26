@@ -20,6 +20,10 @@ function Navigation() {
     ]
     if (isLoggedIn) {
         options = options.slice(1);
+        options.push({
+            text: 'Logout',
+            destination: '/logout'
+        })
     }
 
     const toggleCollapse = () => {

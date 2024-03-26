@@ -9,5 +9,12 @@ export const loginUser = async (userCredentials:any) => {
     } catch (err) {
         return 400;
     }
-    
+}
+
+export const logoutUser = async (userCredentials:any) => {
+    try {
+        const response = await axios.post('http://localhost:4000/logout', userCredentials);
+    } catch(err) {
+        return 400;
+    }
 }

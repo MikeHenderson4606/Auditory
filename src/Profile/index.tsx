@@ -15,7 +15,7 @@ function Profile() {
             <div style={{marginTop: "100px"}}>
                 <div className="row ms-3">
                     <ProfileLinks />
-                    <div className="col-8">
+                    <div className="col-8 bg-secondary-subtle p-2 border rounded">
                         <Routes>
                             <Route path="/" element={
                                 <Navigate to='account' />
