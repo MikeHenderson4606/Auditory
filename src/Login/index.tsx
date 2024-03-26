@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { loginUser } from "./client";
+import { loginUser } from "../Client";
 import { Modal } from "react-bootstrap";
 import { setLoggedIn } from "./loginReducer";
 import { setUserData } from "./userDataReducer";
@@ -35,10 +35,10 @@ function Login() {
                         const response = await loginUser({username: username, password:password});
                         if (response !== 400) {
                             dispatch(setUserData({
-                                username: response.username,
-                                userId: response.userId
-                            }))
-                            dispatch(setLoggedIn());
+                                username: response.profile.username,
+                                userId: response.profile.userId
+                            }));
+                            dispatch(setLoggedIn(true));
                             navigate('/profile');
                         } else {
                             handleModalShow();

@@ -1,12 +1,17 @@
 
 import { Link } from 'react-router-dom';
-import React, {useState} from 'react';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { AuditoryState } from '../store';
+import * as client from '../Client';
+import { setLoggedIn } from '../Login/loginReducer';
+import { setUserData } from '../Login/userDataReducer';
 
 function Navigation() {
     const [isCollapsed, setIsCollapsed] = useState(true);
+    const dispatch = useDispatch();
     const { isLoggedIn } = useSelector((state:AuditoryState) => state.loginReducer);
+    const { userData } = useSelector((state:AuditoryState) => state.userDataReducer);
 
     var options = [
         {
@@ -26,9 +31,27 @@ function Navigation() {
         })
     }
 
+    const logout = () => {
+        client.logoutUser(userData);
+        alert("You have been successfull logged out");
+    }
+
     const toggleCollapse = () => {
         setIsCollapsed(!isCollapsed);
     }
+
+    useEffect(() => {
+        const getProfile = async () => {
+            return await client.getProfile();
+        };
+        getProfile().then((user) => {
+            dispatch(setUserData(user));
+            dispatch(setLoggedIn(true));
+        }).catch((error) => {
+            dispatch(setUserData({}));
+            dispatch(setLoggedIn(false));
+        });
+    }, []);
 
     return (
         <nav className="navbar navbar-expand-md bg-success-subtle border-dark border-bottom">
@@ -40,6 +63,14 @@ function Navigation() {
                 <div className={`collapse navbar-collapse ${isCollapsed ? '' : 'show'}`} id="navbarNav">
                     <div className="navbar-nav ms-auto">
                         {options.map((option, index) => {
+                            if (option.text === "Logout") {
+                                return (
+                                    <button className="nav-link fs-4 me-5" key={index} onClick={() => {
+                                        logout();
+                                        dispatch(setLoggedIn(false));
+                                    }}>{option.text}</button>
+                                )
+                            }
                             return (
                                 <Link to={option.destination} className="nav-link fs-4 me-5" key={index}>{option.text}</Link>
                             );

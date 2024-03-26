@@ -3,13 +3,18 @@ import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from 'react-router-dom';
 import { AuditoryState } from "../store";
+import * as client from "../Client";
 import ProfileLinks from "./ProfileLinks";
 import Account from "./Account";
+import { useEffect, useState } from "react";
+import { setLoggedIn } from "../Login/loginReducer";
+import { setUserData } from "../Login/userDataReducer";
 
 function Profile() {
+    const dispatch = useDispatch();
     const { isLoggedIn } = useSelector((state:AuditoryState) => state.loginReducer);
     const { userData } = useSelector((state:AuditoryState) => state.userDataReducer);
-
+    
     if (isLoggedIn) {
         return (
             <div style={{marginTop: "100px"}}>
@@ -34,8 +39,8 @@ function Profile() {
     } else {
         return (
             <div style={{marginTop: "100px"}}>
-                You are not logged in, please log in here: 
-                <Link to="/login">Login</Link>
+                You are not logged in, please log in here:
+                <Link className="ps-1" to="/login">Login</Link>
             </div>
         )
     }
