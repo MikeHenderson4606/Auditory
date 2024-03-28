@@ -19,6 +19,10 @@ function Navigation() {
             destination: '/login'
         },
         {
+            text: 'Connect to Spotify',
+            destination: '/'
+        },
+        {
             text: 'Profile',
             destination: '/profile'
         }
@@ -38,6 +42,10 @@ function Navigation() {
 
     const toggleCollapse = () => {
         setIsCollapsed(!isCollapsed);
+    }
+
+    const connectToSpotify = () => {
+        client.connectSpotifyUser();
     }
 
     useEffect(() => {
@@ -68,6 +76,12 @@ function Navigation() {
                                     <button className="nav-link fs-4 me-5" key={index} onClick={() => {
                                         logout();
                                         dispatch(setLoggedIn(false));
+                                    }}>{option.text}</button>
+                                )
+                            } else if (option.text === "Connect to Spotify") {
+                                return (
+                                    <button className="nav-link fs-4 me-5" key={index} onClick={() => {
+                                        connectToSpotify();
                                     }}>{option.text}</button>
                                 )
                             }

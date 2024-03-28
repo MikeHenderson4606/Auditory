@@ -10,7 +10,6 @@ import Messenges from './Messenges';
 import SideBarNavigation from './SideBarNavigation';
 import Profile from './Profile';
 import Login from './Login';
-import Logout from './Logout';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './App.css';
@@ -31,7 +30,6 @@ function App() {
             <Routes>
               <Route path="profile/*" element={<Profile />}></Route>
               <Route path="login" element={<Login />}></Route>
-              <Route path="logout" element={<Logout />}></Route>
               <Route path="/" element={<GenericFeed />}></Route>
               <Route path="messages/*" element={<Messenges />}></Route>
             </Routes>
