@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import * as client from "../../../Client";
 
@@ -8,6 +8,7 @@ function SpecificPlaylist() {
     const [loading, setLoading] = useState(true);
     const [tracks, setTracks] = useState([]);
     const [filteredTracks, setFilteredTracks] = useState([]);
+    const navigate = useNavigate();
 
     const editSearch = (input:any) => {
         if (input === "") {
@@ -41,7 +42,12 @@ function SpecificPlaylist() {
 
     return (
         <div>
-            <h1>{playlistName}</h1>
+            <h1 className="text-center">{playlistName}</h1>
+            <button className="btn btn-outline-success no-border mb-1" style={{border: "none"}} onClick={(e) => {
+                navigate('/profile/playlists');
+            }}>
+                <i className="fa fa-arrow-left fa-1x"> Back</i>
+            </button>
             {!loading ?
             <div>
                 <input type="text" placeholder="Search through playlist" className="form-control mb-1" onChange={(e) =>{
@@ -59,6 +65,9 @@ function SpecificPlaylist() {
                                 </h6>
                                 <button className="btn btn-outline-success no-border position-relative justify-center" style={{border: "none"}}>
                                     <i className="fa fa-play-circle fa-2x"></i>
+                                </button>
+                                <button className="btn btn-outline-success no-border position-relative justify-center fs-4 ms-1" style={{border: "none"}}>
+                                    <i className="fa fa-share"></i>
                                 </button>
                             </li>
                         )

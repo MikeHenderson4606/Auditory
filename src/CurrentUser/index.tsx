@@ -13,7 +13,7 @@ function CurrentUser({ children }: { children:any }) {
     const fetchCurrentUser = async () => {
         try {
             const currentUser = await client.getSpotifyUser();
-            if (currentUser !== 400) {
+            if (currentUser.userData !== 400) {
                 dispatch(setSpotifyUserData({
                     accessToken: currentUser.accessToken,
                     user: {
@@ -25,7 +25,7 @@ function CurrentUser({ children }: { children:any }) {
                 console.log("User is not logged into Spotify... logging in now.");
                 await client.connectSpotifyUser();
                 const currentUser = await client.getSpotifyUser();
-                if (currentUser !== 400) {
+                if (currentUser.userData !== 400) {
                     dispatch(setSpotifyUserData({
                         accessToken: currentUser.accessToken,
                         user: {

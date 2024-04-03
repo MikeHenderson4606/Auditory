@@ -43,7 +43,8 @@ export const connectSpotifyUser = async () => {
     await generateCryptoKeys().then((result) => {
         codeVerifier = result.verifier;
         codeChallenge = result.challenge;
-    })
+        console.log("Generated codes");
+    });
 
     console.log("Code verifier: " + codeVerifier);
 
