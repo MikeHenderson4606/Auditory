@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isLoggedIn: false,
+    isLoggedIn: {
+        auditory: false,
+        spotify: false
+    }
 };
 
 const loginSlice = createSlice({
@@ -9,11 +12,14 @@ const loginSlice = createSlice({
     initialState,
     reducers: {
         setLoggedIn: (state, action) => {
-            state.isLoggedIn = action.payload;
+            state.isLoggedIn.auditory = action.payload;
+        },
+        setSpotifyLoggedIn: (state, action) => {
+            state.isLoggedIn.spotify = action.payload;
         }
     },
 });
 
-export const { setLoggedIn } = loginSlice.actions;
+export const { setLoggedIn, setSpotifyLoggedIn } = loginSlice.actions;
 
 export default loginSlice.reducer;

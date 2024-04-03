@@ -10,6 +10,7 @@ import Messenges from './Messenges';
 import SideBarNavigation from './SideBarNavigation';
 import Profile from './Profile';
 import Login from './Login';
+import CurrentUser from './CurrentUser';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './App.css';
@@ -17,26 +18,28 @@ import './App.css';
 function App() {
   return (
     <Provider store={store}>
-      <HashRouter>
-        <div>
-          <div className="fixed-top">
-            <Navigation />
-          </div>
-          <div className="row">
-            <div className="col-2">
-              <SideBarNavigation />
+      <CurrentUser>
+        <HashRouter>
+          <div>
+            <div className="fixed-top">
+              <Navigation />
             </div>
-            <div className="col-8">
-            <Routes>
-              <Route path="profile/*" element={<Profile />}></Route>
-              <Route path="login" element={<Login />}></Route>
-              <Route path="/" element={<GenericFeed />}></Route>
-              <Route path="messages/*" element={<Messenges />}></Route>
-            </Routes>
+            <div className="row">
+              <div className="col-2">
+                <SideBarNavigation />
+              </div>
+              <div className="col-8">
+              <Routes>
+                <Route path="profile/*" element={<Profile />}></Route>
+                <Route path="login" element={<Login />}></Route>
+                <Route path="/" element={<GenericFeed />}></Route>
+                <Route path="messages/*" element={<Messenges />}></Route>
+              </Routes>
+              </div>
             </div>
           </div>
-        </div>
-      </HashRouter>
+        </HashRouter>
+      </CurrentUser>
     </Provider>
   );
 }

@@ -12,6 +12,7 @@ function Navigation() {
     const dispatch = useDispatch();
     const { isLoggedIn } = useSelector((state:AuditoryState) => state.loginReducer);
     const { userData } = useSelector((state:AuditoryState) => state.userDataReducer);
+    const isSpotLoggedIn = true;
 
     var options = [
         {
@@ -19,20 +20,30 @@ function Navigation() {
             destination: '/login'
         },
         {
-            text: 'Connect to Spotify',
-            destination: '/'
-        },
-        {
             text: 'Profile',
             destination: '/profile'
         }
     ]
-    if (isLoggedIn) {
+
+    if (!isLoggedIn.spotify) {
+        options.push(
+            {
+                text: 'Connect to Spotify',
+                destination: '/'
+            }
+        )
+    }
+
+    if (isLoggedIn.auditory) {
         options = options.slice(1);
         options.push({
             text: 'Logout',
-            destination: '/logout'
+            destination: '/api/logout'
         })
+    }
+
+    const spotifyLogin = () => {
+        client.connectSpotifyUser();
     }
 
     const logout = () => {
@@ -44,19 +55,20 @@ function Navigation() {
         setIsCollapsed(!isCollapsed);
     }
 
-    const connectToSpotify = () => {
-        client.connectSpotifyUser();
-    }
-
     useEffect(() => {
         const getProfile = async () => {
             return await client.getProfile();
         };
         getProfile().then((user) => {
-            dispatch(setUserData(user));
-            dispatch(setLoggedIn(true));
+            if (user) {
+                dispatch(setUserData(user));
+                dispatch(setLoggedIn(true));
+            } else {
+                dispatch(setUserData({}));
+                dispatch(setLoggedIn(false));
+            }
         }).catch((error) => {
-            dispatch(setUserData({}));
+            dispatch(setUserData({}))
             dispatch(setLoggedIn(false));
         });
     }, []);
@@ -80,14 +92,13 @@ function Navigation() {
                                 )
                             } else if (option.text === "Connect to Spotify") {
                                 return (
-                                    <button className="nav-link fs-4 me-5" key={index} onClick={() => {
-                                        connectToSpotify();
-                                    }}>{option.text}</button>
-                                )
+                                    <Link to={option.destination} className="nav-link fs-4 me-5" key={index} onClick={spotifyLogin}>{option.text}</Link>
+                                );
+                            } else {
+                                return (
+                                    <Link to={option.destination} className="nav-link fs-4 me-5" key={index}>{option.text}</Link>
+                                );
                             }
-                            return (
-                                <Link to={option.destination} className="nav-link fs-4 me-5" key={index}>{option.text}</Link>
-                            );
                         })}
                     </div>
                 </div>

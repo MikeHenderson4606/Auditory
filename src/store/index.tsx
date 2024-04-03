@@ -4,12 +4,23 @@ import userDataReducer from "../Login/userDataReducer";
 
 export interface AuditoryState {
   loginReducer: {
-    isLoggedIn: boolean;
+    isLoggedIn: {
+      auditory: boolean,
+      spotify: boolean
+    };
   },
   userDataReducer: {
     userData: {
-      username: "",
-      userId: ""
+      auditory: {
+        username: string,
+        userId: string
+      },
+      spotify: {
+        accessToken: string,
+        user: {
+          username: string
+        }
+      } 
     }
   }
 }
