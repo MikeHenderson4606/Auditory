@@ -14,16 +14,23 @@ function CurrentUser({ children }: { children:any }) {
         try {
             const currentUser = await client.getSpotifyUser();
             if (currentUser !== 400) {
-                dispatch(setSpotifyUserData({accessToken: currentUser}));
+                dispatch(setSpotifyUserData({
+                    accessToken: currentUser.accessToken,
+                    user: {
+                        username: currentUser.userData.display_name,
+                        userId: currentUser.userData.id
+                    }}));
                 dispatch(setSpotifyLoggedIn(true));
             } else {
+                console.log("User is not logged into Spotify... logging in now.");
                 await client.connectSpotifyUser();
                 const currentUser = await client.getSpotifyUser();
                 if (currentUser !== 400) {
                     dispatch(setSpotifyUserData({
                         accessToken: currentUser.accessToken,
                         user: {
-                            username: currentUser.userData.display_name
+                            username: currentUser.userData.display_name,
+                            userId: currentUser.userData.id
                         }
                     }));
                     dispatch(setSpotifyLoggedIn(true));
@@ -37,10 +44,15 @@ function CurrentUser({ children }: { children:any }) {
         }
 
         try {
+            console.log("Checking if the user is signed into auditory");
             const currentUser = await client.getProfile();
             if (currentUser) {
+                console.log("User is logged in");
                 dispatch(setUserData(currentUser));
                 dispatch(setLoggedIn(true));
+            } else {
+                console.log("User is not logged in");
+                dispatch(setLoggedIn(false));
             }
         } catch (err) {
             dispatch(setUserData(null));

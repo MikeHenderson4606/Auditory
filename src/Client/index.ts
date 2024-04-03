@@ -78,3 +78,21 @@ export const getSpotifyUser = async () => {
         return 400;
     }
 }
+
+export const getSpotifyPlaylists = async (userId:any) => {
+    try {
+        const response = await api.get(`${API_BASE}/spplaylists/${userId}`);
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}
+
+export const getSpotifyTracks = async (playlistId:any) => {
+    try {
+        const response = await api.get(`${API_BASE}/sptracks/${playlistId}`);
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}

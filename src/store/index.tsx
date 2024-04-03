@@ -18,7 +18,8 @@ export interface AuditoryState {
       spotify: {
         accessToken: string,
         user: {
-          username: string
+          username: string,
+          userId: string
         }
       } 
     }

@@ -7,7 +7,11 @@ const initialState = {
             userId: ""
         },
         spotify: {
-            accessToken: ""
+            accessToken: "",
+            user: {
+                username: "",
+                userId: ""
+            }
         }
     },
 };
@@ -24,7 +28,11 @@ const userDataSlice = createSlice({
         },
         setSpotifyUserData: (state, action) => {
             state.userData.spotify = {
-                accessToken: action.payload.accessToken
+                accessToken: action.payload.accessToken,
+                user: {
+                    username: action.payload.user.username,
+                    userId: action.payload.user.userId
+                }
             }
         }
     },

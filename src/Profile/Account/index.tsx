@@ -15,7 +15,7 @@ function Account() {
             <h4>Password: ****</h4>
             <hr />
             <h3>Spotify Details</h3>
-            <h4>Spotify Username: {userData.spotify.accessToken}</h4>
+            <h4>Spotify Username: {userData.spotify.user.username}</h4>
         </div>
     );
 }

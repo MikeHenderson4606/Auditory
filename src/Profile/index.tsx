@@ -6,6 +6,8 @@ import { AuditoryState } from "../store";
 import * as client from "../Client";
 import ProfileLinks from "./ProfileLinks";
 import Account from "./Account";
+import Playlists from "./Playlists";
+import SpecificPlaylist from "./Playlists/SpecificPlaylist";
 import { useEffect, useState } from "react";
 import { setLoggedIn } from "../Login/loginReducer";
 import { setUserData } from "../Login/userDataReducer";
@@ -15,7 +17,7 @@ function Profile() {
     const { isLoggedIn } = useSelector((state:AuditoryState) => state.loginReducer);
     const { userData } = useSelector((state:AuditoryState) => state.userDataReducer);
     
-    if (isLoggedIn) {
+    if (isLoggedIn.auditory) {
         return (
             <div style={{marginTop: "100px"}}>
                 <div className="row ms-3">
@@ -28,7 +30,9 @@ function Profile() {
                             <Route path="account" element={
                                 <Account />} />
                             <Route path="playlists" element={
-                                <h1>Playlists</h1>} />
+                                <Playlists />} />
+                            <Route path="playlists/song/:playlistId/:playlistName" element={
+                                <SpecificPlaylist />}/>
                             <Route path="settings" element={
                                 <h1>Settings</h1>} />
                         </Routes>
