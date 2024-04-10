@@ -54,7 +54,7 @@ export const connectSpotifyUser = async () => {
     const params =  {
         response_type: 'code',
         client_id: clientID,
-        scope,
+        scope: scope,
         code_challenge_method: 'S256',
         code_challenge: codeChallenge,
         redirect_uri: redirect_uri,
@@ -103,6 +103,24 @@ export const playSong = async (trackId:string) => {
         const response = await api.get(`${API_BASE}/spplaysong/${trackId}`);
         return response.data;
     } catch (err) {
-        return 400;
+        return 400; 
+    }
+}
+
+export const pauseSong = async () => {
+    try {
+        const response = await api.get(`${API_BASE}/sppause`);
+        return response.data;
+    } catch (err) {
+        return 400; 
+    }
+}
+
+export const getLikedSongs = async () => {
+    try {
+        const response = await api.get(`${API_BASE}/splikedsongs`);
+        return response.data;
+    } catch (err) {
+        return 400; 
     }
 }

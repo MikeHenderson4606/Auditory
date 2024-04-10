@@ -1,13 +1,17 @@
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import * as client from "../../../Client";
-
+import AuditoryModal from "../../../AuditoryModal";
 
 function PlaylistTracks() {
     const { playlistId, playlistName } = useParams();
     const [loading, setLoading] = useState(true);
     const [tracks, setTracks] = useState([]);
+    const [modalText, setModalText] = useState("");
+    const [showModal, setShowModal] = useState(false);
     const [filteredTracks, setFilteredTracks] = useState([]);
+    const [currentlyPlayingTrack, setCurrentlyPlayingTrack] = useState("");
+    const [likedSongs, setLikedSongs] = useState({});
     const navigate = useNavigate();
 
     const editSearch = (input:any) => {
@@ -26,9 +30,42 @@ function PlaylistTracks() {
         }
     }
 
+    const getLikedSongs = () => {
+        client.getLikedSongs().then(response => {
+            if (response === 400) {
+                setModalText("There was an error playing the track. Please ensure Spotify is open, you are not listening along to anyone, and try again.");
+                setShowModal(!showModal);
+            } else {
+                setLikedSongs(response.data);
+                console.log(response.data);
+            }
+        })
+    }
+
     const playSong = (trackId:string) => {
         console.log(trackId);
-        client.playSong(trackId);
+        setCurrentlyPlayingTrack(trackId);
+        client.playSong(trackId).then(response => {
+            if (response === 400) {
+                setModalText("There was an error playing the track. Please ensure Spotify is open, you are not listening along to anyone, and try again.");
+                setShowModal(!showModal);
+            }
+        })
+    }
+
+    const pauseSong = () => {
+        setCurrentlyPlayingTrack("");
+        client.pauseSong().then(response => {
+            if (response === 400) {
+                setModalText("There was an error playing the track. Please ensure Spotify is open, you are not listening along to anyone, and try again.");
+                setShowModal(!showModal);
+                setCurrentlyPlayingTrack("");
+            }
+        })
+    }
+
+    const handleModalShow = () => {
+        setShowModal(!showModal);
     }
 
     useEffect(() => {
@@ -38,6 +75,7 @@ function PlaylistTracks() {
                 setTracks(response.items);
                 setFilteredTracks(response.items);
                 setLoading(false);
+                console.log(response.items);
             } else {
                 setLoading(false);
             }
@@ -55,24 +93,40 @@ function PlaylistTracks() {
             </button>
             {!loading ?
             <div>
-                <input type="text" placeholder="Search through playlist" className="form-control mb-1" onChange={(e) =>{
+                <input type="text" placeholder={`Search through playlist`} className="form-control mb-1" onChange={(e) =>{
                     editSearch(e.target.value);
                 }} />
                 <ul className="list-group">
-                    {filteredTracks.map((track:any, index) => {
+                    {filteredTracks.map((track:any, index:number) => {
+                        let playButton = (<div></div>);
+                        let activeFlag = false;
+                        if (track.track.uri === currentlyPlayingTrack) {
+                            activeFlag = true;
+                            playButton = (
+                                <button className="btn btn-outline-success no-border" style={{border: "none"}} onClick={(e) => {
+                                    pauseSong();
+                                }}>
+                                    <i className="fa fa-pause-circle fa-2x"></i>
+                                </button>
+                            )
+                        } else {
+                            playButton = (
+                                <button className="btn btn-outline-success no-border" style={{border: "none"}} onClick={(e) => {
+                                    playSong(track.track.uri);
+                                }}>
+                                    <i className="fa fa-play-circle fa-2x"></i>
+                                </button>
+                            )
+                        }
                         return (
-                            <li className="list-group-item text-center" key={index}>
+                            <li className={activeFlag ? "list-group-item text-center list-group-item-success" : "list-group-item text-center"} key={index}>
                                 <h5>
                                     {track.track.name} 
                                 </h5>
                                 <h6>
                                     {track.track.artists[0].name}
                                 </h6>
-                                <button className="btn btn-outline-success no-border position-relative justify-center" style={{border: "none"}} onClick={(e) => {
-                                    playSong(track.track.uri);
-                                }}>
-                                    <i className="fa fa-play-circle fa-2x"></i>
-                                </button>
+                                {playButton}
                                 <button className="btn btn-outline-success no-border position-relative justify-center fs-4 ms-1" style={{border: "none"}}>
                                     <i className="fa fa-share"></i>
                                 </button>
@@ -85,7 +139,7 @@ function PlaylistTracks() {
                 Your tracks are loading... hold tight.
             </div>
             }
-            
+            <AuditoryModal text={modalText} showModal={showModal} onHide={handleModalShow} />
         </div>
     )
 }
