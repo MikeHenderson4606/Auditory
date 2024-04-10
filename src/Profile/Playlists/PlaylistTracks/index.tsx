@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import * as client from "../../../Client";
 
 
-function SpecificPlaylist() {
+function PlaylistTracks() {
     const { playlistId, playlistName } = useParams();
     const [loading, setLoading] = useState(true);
     const [tracks, setTracks] = useState([]);
@@ -24,6 +24,11 @@ function SpecificPlaylist() {
             });
             setFilteredTracks(appliedSearch);
         }
+    }
+
+    const playSong = (trackId:string) => {
+        console.log(trackId);
+        client.playSong(trackId);
     }
 
     useEffect(() => {
@@ -63,7 +68,9 @@ function SpecificPlaylist() {
                                 <h6>
                                     {track.track.artists[0].name}
                                 </h6>
-                                <button className="btn btn-outline-success no-border position-relative justify-center" style={{border: "none"}}>
+                                <button className="btn btn-outline-success no-border position-relative justify-center" style={{border: "none"}} onClick={(e) => {
+                                    playSong(track.track.uri);
+                                }}>
                                     <i className="fa fa-play-circle fa-2x"></i>
                                 </button>
                                 <button className="btn btn-outline-success no-border position-relative justify-center fs-4 ms-1" style={{border: "none"}}>
@@ -83,4 +90,4 @@ function SpecificPlaylist() {
     )
 }
 
-export default SpecificPlaylist;
+export default PlaylistTracks;

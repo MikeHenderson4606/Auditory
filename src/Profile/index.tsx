@@ -7,7 +7,7 @@ import * as client from "../Client";
 import ProfileLinks from "./ProfileLinks";
 import Account from "./Account";
 import Playlists from "./Playlists";
-import SpecificPlaylist from "./Playlists/SpecificPlaylist";
+import SpecificPlaylist from "./Playlists/PlaylistTracks";
 import { useEffect, useState } from "react";
 import { setLoggedIn } from "../Login/loginReducer";
 import { setUserData } from "../Login/userDataReducer";

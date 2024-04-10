@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import * as client from '../../Client';
 import { Routes, Route } from 'react-router';
-import SpecificPlaylist from './SpecificPlaylist';
+import SpecificPlaylist from './PlaylistTracks';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AuditoryState } from '../../store';
@@ -13,13 +13,15 @@ function Playlists() {
 
     useEffect(() => {
         const getPlaylists = async () => {
-            const playlistData = await client.getSpotifyPlaylists(userData.spotify.user.userId);
-            const playlists = playlistData.items;
-            console.log(playlists);
-            setPlaylists(playlists);
+            if (userData.spotify.user.userId) {
+                const playlistData = await client.getSpotifyPlaylists(userData.spotify.user.userId);
+                const playlists = playlistData.items;
+                console.log(playlists);
+                setPlaylists(playlists);
+            }
         }
         getPlaylists();
-    }, []);
+    }, [userData]);
 
     return (
         <div>

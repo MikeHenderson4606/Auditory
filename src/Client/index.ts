@@ -48,7 +48,7 @@ export const connectSpotifyUser = async () => {
 
     console.log("Code verifier: " + codeVerifier);
 
-    const scope = 'user-read-private user-read-email';
+    const scope = 'user-read-private user-read-email user-read-playback-state user-modify-playback-state';
     const authUrl = new URL("https://accounts.spotify.com/authorize");
 
     const params =  {
@@ -92,6 +92,15 @@ export const getSpotifyPlaylists = async (userId:any) => {
 export const getSpotifyTracks = async (playlistId:any) => {
     try {
         const response = await api.get(`${API_BASE}/sptracks/${playlistId}`);
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}
+
+export const playSong = async (trackId:string) => {
+    try {
+        const response = await api.get(`${API_BASE}/spplaysong/${trackId}`);
         return response.data;
     } catch (err) {
         return 400;

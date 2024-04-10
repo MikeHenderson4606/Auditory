@@ -13,6 +13,8 @@ function CurrentUser({ children }: { children:any }) {
     const fetchCurrentUser = async () => {
         try {
             const currentUser = await client.getSpotifyUser();
+            console.log("Printing current user: ");
+            console.log(currentUser);
             if (currentUser.userData !== 400) {
                 dispatch(setSpotifyUserData({
                     accessToken: currentUser.accessToken,
