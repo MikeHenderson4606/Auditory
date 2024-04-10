@@ -2,20 +2,53 @@
 import { useSelector } from "react-redux";
 import { AuditoryState } from "../../store";
 import { useEffect, useState } from "react";
-import * as client from '../../Client';
-import axios from "axios";
+import { Link, Routes, Route, useLocation } from "react-router-dom";
+import Posts from "./Posts";
+import Likes from "./Likes";
+import Details from "./Details";
+import './index.css';
 
 function Account() {
+    const { pathname } = useLocation();
     const { userData } = useSelector((state:AuditoryState) => state.userDataReducer);
+
+    const links = [
+        {
+            destination: 'posts',
+            text: 'Posts'
+        },
+        {
+            destination: 'likes',
+            text: 'Likes'
+        },
+        {
+            destination: 'details',
+            text: 'Details'
+        },
+    ]
+    
 
     return (
         <div>
-            <h1>Account</h1> <hr />
-            <h4>Username: {userData.auditory.username}</h4> 
-            <h4>Password: ****</h4>
-            <hr />
-            <h3>Spotify Details</h3>
-            <h4>Spotify Username: {userData.spotify.user.username}</h4>
+            <ul className="nav nav-underline">
+                {links.map((link, index) => {
+                    let classNameVar = "nav-link fs-5"
+                    if (pathname.includes(link.destination)) {
+                        classNameVar = classNameVar + " active";
+                    }
+                    return (
+                    <li className="nav-item me-5" key={index}>
+                        <Link className={classNameVar} style={{color: "#198754"}} aria-current="page" to={link.destination}>{link.text}</Link>
+                    </li>
+                    );
+                })}
+            </ul>
+            <hr className="position-relative" style={{top: "-16px"}} />
+            <Routes>
+                <Route path="posts" element={<Posts />}></Route>
+                <Route path="likes" element={<Likes />}></Route>
+                <Route path="details" element={<Details />}></Route>
+            </Routes>
         </div>
     );
 }

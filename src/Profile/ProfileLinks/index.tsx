@@ -6,7 +6,7 @@ function ProfileLinks() {
     const profileLinks = [
         {
             text: "Account",
-            destination: "account"
+            destination: "account/posts"
         },
         {
             text: "Playlists",
@@ -22,7 +22,7 @@ function ProfileLinks() {
         <div className="list-group col-3">
             {profileLinks.map((link, index) => {
                 var classNameStr = "list-group-item list-group-item-action list-group-item-success";
-                if ((pathname.includes(link.destination) && link.destination !== "/")) {
+                if ((pathname.includes(link.destination.split('/')[0]) && link.destination !== "/")) {
                     classNameStr = classNameStr + " active";
                 }
                 return (

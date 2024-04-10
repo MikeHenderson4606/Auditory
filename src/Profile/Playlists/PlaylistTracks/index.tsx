@@ -75,7 +75,6 @@ function PlaylistTracks() {
                 setTracks(response.items);
                 setFilteredTracks(response.items);
                 setLoading(false);
-                console.log(response.items);
             } else {
                 setLoading(false);
             }
@@ -96,7 +95,7 @@ function PlaylistTracks() {
                 <input type="text" placeholder={`Search through playlist`} className="form-control mb-1" onChange={(e) =>{
                     editSearch(e.target.value);
                 }} />
-                <ul className="list-group overflow-y-auto" style={{height: 600}}>
+                <ul className="list-group overflow-y-auto" style={{height: "35em"}}>
                     {filteredTracks.map((track:any, index:number) => {
                         let playButton = (<div></div>);
                         let activeFlag = false;

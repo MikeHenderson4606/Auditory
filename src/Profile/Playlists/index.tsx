@@ -16,7 +16,6 @@ function Playlists() {
             if (userData.spotify.user.userId) {
                 const playlistData = await client.getSpotifyPlaylists(userData.spotify.user.userId);
                 const playlists = playlistData.items;
-                console.log(playlists);
                 setPlaylists(playlists);
             }
         }
@@ -25,8 +24,8 @@ function Playlists() {
 
     return (
         <div>
-            <h1 className="text-center">Playlists</h1>
-            <div className="list-group">
+            <h1 className="text-center" style={{fontFamily: "Verdana"}}>Playlists</h1>
+            <div className="list-group overflow-y-auto" style={{height: "40em"}}>
                 {playlists.map((playlist:any, index) => {
                     return (
                         <Link to={`song/${playlist.id}/${playlist.name}`} className="list-group-item list-group-item-action list-group-item-light" key={index}>

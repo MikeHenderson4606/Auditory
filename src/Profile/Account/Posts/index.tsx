@@ -1,7 +1,7 @@
 
-import Song from "../Song";
+import Song from "../../../Song";
 
-function GenericFeed() {
+function Posts() {
     const posts = [
         {
             title: 'Song1',
@@ -41,20 +41,26 @@ function GenericFeed() {
     ]
 
     return (
-        <div className="feed-offset overflow-y-auto p-3 bg-light border rounded" style={{height: "40em"}}>
-            {posts.map((post, index) => {
-                let classNameVar = "";
-                if (index !== 0) {
-                    classNameVar = "mt-4"
-                }
-                return (
-                    <div className={classNameVar} key={index}>
-                        <Song title={post.title} artist={post.artist} poster={post.poster} link={post.link} description={post.description} />
-                    </div>
-                );
-            })}
+        <div>
+            <h2 className="text-center">Your Posts</h2>
+            <div>
+                <input placeholder="Search Posts" className="form-control" />
+                <button className="btn btn-success mt-1">
+                    New Post
+                </button>
+            </div> <br />
+            <div className="overflow-y-auto border border-light rounded bg-light" style={{height: "29em"}}>
+                {posts.map((post, index) => {
+                    return (
+                        <div className="p-3" key={index}>
+                            <Song title={post.title} artist={post.artist} poster={post.poster} link={post.link} description={post.description} />
+                        </div>
+                    );
+                })}
+            </div>
         </div>
+        
     );
 }
 
-export default GenericFeed;
+export default Posts;

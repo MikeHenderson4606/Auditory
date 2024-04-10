@@ -17,7 +17,7 @@ function Song(props:any) {
     }
 
     return (
-        <div className="my-4 border border-secondary rounded row bg-success-subtle">
+        <div className="border border-secondary rounded row bg-success-subtle">
             <div className="col-9">
                 <h4 className="text-center mt-2">{title}</h4>
                 <h5 className="text-center">{artist}</h5>
@@ -34,6 +34,9 @@ function Song(props:any) {
                         </button>}
                         <a href={linkTo} target="_blank" className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} >
                             <i className="fa fa-share"></i>
+                        </a>
+                        <a href={linkTo} target="_blank" className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} >
+                            <i className="fa fa-heart-o"></i>
                         </a>
                     </div>
                 </nav>

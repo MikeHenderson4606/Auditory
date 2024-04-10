@@ -22,12 +22,12 @@ function Profile() {
             <div style={{marginTop: "100px"}}>
                 <div className="row ms-3">
                     <ProfileLinks />
-                    <div className="col-8 bg-secondary-subtle p-2 border rounded">
+                    <div className="col-9 bg-secondary-subtle p-2 border rounded">
                         <Routes>
                             <Route path="/" element={
-                                <Navigate to='account' />
+                                <Navigate to='account/posts' />
                             }></Route>
-                            <Route path="account" element={
+                            <Route path="account/*" element={
                                 <Account />} />
                             <Route path="playlists" element={
                                 <Playlists />} />
