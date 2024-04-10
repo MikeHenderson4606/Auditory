@@ -96,7 +96,7 @@ function PlaylistTracks() {
                 <input type="text" placeholder={`Search through playlist`} className="form-control mb-1" onChange={(e) =>{
                     editSearch(e.target.value);
                 }} />
-                <ul className="list-group">
+                <ul className="list-group overflow-y-auto" style={{height: 600}}>
                     {filteredTracks.map((track:any, index:number) => {
                         let playButton = (<div></div>);
                         let activeFlag = false;
@@ -121,7 +121,8 @@ function PlaylistTracks() {
                         return (
                             <li className={activeFlag ? "list-group-item text-center list-group-item-success" : "list-group-item text-center"} key={index}>
                                 <h5>
-                                    {track.track.name} 
+                                    {track.track.name}
+                                    <img className="position-relative img-thumbnail float-end border rounded" width="20%" height="20%" src={track.track.album.images[0].url}></img>
                                 </h5>
                                 <h6>
                                     {track.track.artists[0].name}
@@ -130,6 +131,7 @@ function PlaylistTracks() {
                                 <button className="btn btn-outline-success no-border position-relative justify-center fs-4 ms-1" style={{border: "none"}}>
                                     <i className="fa fa-share"></i>
                                 </button>
+                                
                             </li>
                         )
                     })}
