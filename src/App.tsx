@@ -11,6 +11,7 @@ import SideBarNavigation from './SideBarNavigation';
 import Profile from './Profile';
 import Login from './Login';
 import CurrentUser from './CurrentUser';
+import Post from './Post';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './App.css';
@@ -34,6 +35,7 @@ function App() {
                 <Route path="login" element={<Login />}></Route>
                 <Route path="/" element={<GenericFeed />}></Route>
                 <Route path="messages/*" element={<Messenges />}></Route>
+                <Route path="post" element={<Post />}></Route>
               </Routes>
               </div>
             </div>

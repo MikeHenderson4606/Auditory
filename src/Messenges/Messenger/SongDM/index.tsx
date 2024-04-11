@@ -5,10 +5,10 @@ function SongDM({title, artist, link, id} : {title: string, artist: string, link
         <div className="bg-body-secondary border border-secondary rounded p-2">
             <span className='fs-5'>{title} by {artist}</span> <br />
             <span className='position-relative'>
-                <button className="btn btn-outline-success ms-2 border-0" >
+                <button className="btn btn-outline-success ms-2 border-0" type="button">
                     <i className="fa fa-play-circle fa-2x"></i>
                 </button>
-                <a className="btn btn-outline-success ms-2 border-0 fs-4" target="_blank">
+                <a className="btn btn-outline-success ms-2 border-0 fs-4" target="_blank" type="button">
                     <i className="fa fa-ellipsis-v" />
                 </a>
             </span>

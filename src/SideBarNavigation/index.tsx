@@ -5,6 +5,7 @@ import { useLocation } from "react-router";
 
 function SideBarNavigation() {
     const { pathname } = useLocation();
+    let setPostActive = "";
     const navLocations = [
         {
             name: 'Home',
@@ -20,8 +21,12 @@ function SideBarNavigation() {
         }
     ]
 
+    if (pathname.includes("post")) {
+        setPostActive = "active";
+    }
+
     return (
-        <div className="feed-offset border rounded ms-2">
+        <div className="feed-offset ms-2">
             <div className="list-group">
                 {navLocations.map((nav, index) => {
                     var classNameStr = "list-group-item list-group-item-action list-group-item-success text-center";
@@ -35,6 +40,11 @@ function SideBarNavigation() {
                         {nav.name}
                     </Link>)
                 })}
+            </div>
+            <div className="list-group mt-4">
+                <Link to="post" className={"list-group-item list-group-item-action list-group-item-success text-center " + setPostActive}>
+                    Post
+                </Link>
             </div>
         </div>
     );
