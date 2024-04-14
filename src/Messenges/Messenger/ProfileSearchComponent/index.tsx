@@ -1,49 +1,36 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { AuditoryState } from "../../../store";
+import * as client from "../../../Client";
 
-function ProfileSearchComponent({selectedSong, selectedPlaylist, setSelectedSong, setSelectedPlaylist}: 
-    {selectedSong: any, selectedPlaylist: any, setSelectedSong: (selectedSong: any) => void, setSelectedPlaylist: (selectedPlaylist: any) => void}) {
-    const playlists = [
-        {
-            name: "Playlist 1",
-            id: "P1"
-        },
-        {
-            name: "Playlist 2",
-            id: "P2"
-        },
-    ];
+function ProfileSearchComponent({selectedSong, selectedPlaylist, setSelectedSong, setSelectedPlaylist}: {selectedSong: any, selectedPlaylist: any, setSelectedSong: (selectedSong: any) => void, setSelectedPlaylist: (selectedPlaylist: any) => void}) {
+    const { userData } = useSelector((state:AuditoryState) => state.userDataReducer);
+    const [playlists, setPlaylists] = useState([]);
+    const [songs, setSongs] = useState([]);
 
-    const songs = [
-        {
-            title: "Song 1",
-            artist: "Artist 1",
-            link: "Link",
-            for: "P1",
-            id: "S1",
-        },
-        {
-            title: "Song 2",
-            artist: "Artist 2",
-            link: "Link",
-            for: "P1",
-            id: "S2"
-        },
-        {
-            title: "Song 3",
-            artist: "Artist 3",
-            link: "Link",
-            for: "P2",
-            id: "S3"
-        },
-        {
-            title: "Song 4",
-            artist: "Artist 4",
-            link: "Link",
-            for: "P2",
-            id: "S4"
-        },
-    ];
+    useEffect(() => {
+        const getPlaylists = async () => {
+            if (userData.spotify.user.userId) {
+                const playlistData = await client.getSpotifyPlaylists(userData.spotify.user.userId);
+                const playlists = playlistData.items;
+                setPlaylists(playlists);
+            }
+        }
+        const getSongs = async () => {
+            if (userData.spotify.user.userId) {
+                const trackData = await client.getSpotifyTracks(selectedPlaylist.id)
+                const tracks = trackData.items;
+                setSongs(tracks);
+            }
+        }
+        getPlaylists();
+        try {
+            if (selectedPlaylist.id) {
+                getSongs();
+            }
+        } catch (err) {}
+    }, [userData, selectedPlaylist])
 
     return (
     <>
@@ -55,46 +42,41 @@ function ProfileSearchComponent({selectedSong, selectedPlaylist, setSelectedSong
                     id: e.target.value
                 }
                 setSelectedPlaylist(currPlaylist);
-                setSelectedSong({
-                    title: "",
-                    artist: "",
-                    link: "",
-                    id: ""
-                });
+                setSelectedSong({});
             }}>
                 <option value="">Choose...</option>
-                {playlists.map((playlist, index) => {
+                {playlists.map((playlist:any, index) => {
                     return (
-                        <option value={playlist.id} key={index}>{playlist.name}</option>
-                    )
-                })}
+                        <option id={playlist.id} value={playlist.id} key={index}>{playlist.name}</option>
+                    )})
+                }
             </select>
         </div>
-        <div>
+        {selectedPlaylist.id ? <div>
             <label className="input-text mb-1" htmlFor="songSelector">Select a song from {selectedPlaylist.name}:</label>
-            <select className="form-select" id="songSelector" value={selectedSong.id} onChange={(e) => {
-                const currSong = songs.find((song, index) => 
-                    (song.id === e.target.value)
+            <select className="form-select" id="songSelector" onChange={(e) => {
+                const currSong = songs.find((song:any, index) => 
+                    (song.track.id === e.target.value)
                 )
+                console.log("Selected a playlist")
                 if (currSong) {
+                    console.log(currSong)
                     setSelectedSong(currSong);
                 }
             }}>
                 <option value="">Choose...</option>
-                {songs.map((song, index) => {
-                    if (song.for === selectedPlaylist.id) {
-                        return (
-                            <option value={song.id} key={index}>{song.title} by {song.artist}</option>
-                        );
-                    }
-                })}
+                {songs.map((song:any, index) => {
+                    return (
+                        <option value={song.track.id} key={index}>{song.track.name} by {song.track.artists[0].name}</option>
+                    )})}
             </select>
-        </div>
-        {((selectedSong.id !== "") && 
+        </div>  : <div></div>}
+        {selectedSong.track ? 
             <div className="mt-3">
-                Selected Song: {selectedSong.title} by {selectedSong.artist}.
-            </div>
-        )}
+                Selected Song: {selectedSong.track.name} by {selectedSong.track.artists[0].name}.
+            </div> :
+            <div></div>
+        }
     </>
     );
 }

@@ -13,18 +13,8 @@ function Post() {
     const [showModal, setShowModal] = useState(false);
     const [activeTab, setActiveTab] = useState("profile");
     const [showProfileSearch, setShowProfileSearch] = useState(true);
-    const [playlists, setPlaylists] = useState({});
-    const [songs, setSongs] = useState({});
-    const [selectedPlaylist, setSelectedPlaylist] = useState({
-        name: "",
-        id: ""
-    });
-    const [selectedSong, setSelectedSong] = useState({
-        title: "",
-        artist: "",
-        link: "",
-        id: ""
-    });
+    const [selectedPlaylist, setSelectedPlaylist] = useState<any>({});
+    const [selectedSong, setSelectedSong] = useState<any>({});
 
     const handleModalShow = () => {
         setShowModal(!showModal);
@@ -40,12 +30,6 @@ function Post() {
         setActiveTab("search");
     }
 
-    useEffect(() => {
-        client.getSpotifyPlaylists(userData.spotify.user.userId).then(response => {
-            setPlaylists(response.data);
-        })
-    })
-
     return (
         <div className="feed-offset">
             <h1>Post</h1>
@@ -56,25 +40,21 @@ function Post() {
                     }}>
                         Attach Song
                     </button>
-                    {selectedSong.id !== "" ? 
-                    <button className="btn btn-outline-danger float-end" style={{border: 'none'}} onClick={(e) => {
-                        setSelectedSong({
-                            title: "",
-                            artist: "",
-                            link: "",
-                            id: ""
-                        })
-                    }}>
-                        <i className="fa fa-trash fa-2x"></i>
-                    </button> : 
-                    <div></div>}
+                    {selectedSong ? 
+                        <button className="btn btn-outline-danger float-end" style={{border: 'none'}} onClick={(e) => {
+                            setSelectedSong({})
+                        }}>
+                            <i className="fa fa-trash fa-2x"></i>
+                        </button> : 
+                        <div></div>
+                    }
                 </div>
-                {selectedSong.id !== "" ? 
-                <div>
-                    <SongDM title={selectedSong.title} artist={selectedSong.artist} link={selectedSong.link} id={selectedSong.id} />
-                    
-                </div> : 
-                <div></div>}
+                {selectedSong.track ? 
+                    <div>
+                        <SongDM title={selectedSong.track.name} artist={selectedSong.track.artists[0].name} link={"selectedSong.external_urls[0].spotify"} id={selectedSong.track.id} />
+                        
+                    </div> : 
+                    <div></div>}
                 <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">Post Description</label>
                     <textarea className="form-control" id="exampleInputEmail1" placeholder="Optional"/>
