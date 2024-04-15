@@ -13,7 +13,7 @@ export interface AuditoryState {
     userData: {
       auditory: {
         username: string,
-        userId: string
+        userId: number
       },
       spotify: {
         accessToken: string,

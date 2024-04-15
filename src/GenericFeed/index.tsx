@@ -1,55 +1,30 @@
 
 import Song from "../Song";
+import * as client from "../Client";
+import { useEffect, useState } from "react";
 
 function GenericFeed() {
-    const posts = [
-        {
-            title: 'Song1',
-            artist: 'Artist 1',
-            poster: 'Person 1',
-            description: 'Description 1',
-            link: 'https://www.spotify.com'
-        },
-        {
-            title: 'Song2',
-            artist: 'Artist 2',
-            poster: 'Person 2',
-            description: 'Description 2',
-            link: 'https://www.spotify.com'
-        },
-        {
-            title: 'Song3',
-            artist: 'Artist 3',
-            poster: 'Person 3',
-            description: 'Description 3',
-            link: 'https://www.spotify.com'
-        },
-        {
-            title: 'Song4',
-            artist: 'Artist 4',
-            poster: 'Person 4',
-            description: 'Description 4',
-            link: 'https://www.spotify.com'
-        },
-        {
-            title: 'Song5',
-            artist: 'Artist 5',
-            poster: 'Person 5',
-            description: 'Description 5',
-            link: 'https://www.spotify.com'
+    const [posts, setPosts] = useState<any>([]);
+    const [userLikes, setUserLikes] = useState<any>([]);
+
+    useEffect(() => {
+        const getGenericPosts = async () => {
+            const posts = await client.getGenericPosts();
+            setPosts(posts);
         }
-    ]
+        getGenericPosts();
+    })
 
     return (
-        <div className="feed-offset overflow-y-auto p-3 bg-light border rounded" style={{height: "40em"}}>
-            {posts.map((post, index) => {
+        <div className="feed-offset p-3">
+            {posts.map((post:any, index:number) => {
                 let classNameVar = "";
                 if (index !== 0) {
                     classNameVar = "mt-4"
                 }
                 return (
                     <div className={classNameVar} key={index}>
-                        <Song title={post.title} artist={post.artist} poster={post.poster} link={post.link} description={post.description} />
+                        <Song id={post.id} title={post.title} artist={post.artist} poster={post.poster} linkTo={post.link} description={post.description} isLiked={false} />
                     </div>
                 );
             })}

@@ -21,18 +21,18 @@ function SideBarNavigation() {
         }
     ]
 
-    if (pathname.includes("post")) {
+    if (pathname.split('/')[1].includes("post")) {
         setPostActive = "active";
     }
-
+    
     return (
-        <div className="feed-offset ms-2">
+        <div className="feed-offset ms-2 position-fixed" style={{width: "12em"}}>
             <div className="list-group">
                 {navLocations.map((nav, index) => {
                     var classNameStr = "list-group-item list-group-item-action list-group-item-success text-center";
                     if (pathname === "/" && nav.location === "/") {
                         classNameStr = classNameStr + " active";
-                    } else if ((pathname.includes(nav.location) && nav.location !== "/")) {
+                    } else if ((pathname.split('/')[1].includes(nav.location) && nav.location !== "/")) {
                         classNameStr = classNameStr + " active";
                     }
                     return (

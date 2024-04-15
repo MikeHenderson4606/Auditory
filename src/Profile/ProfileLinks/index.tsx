@@ -3,6 +3,7 @@ import { useLocation } from "react-router";
 
 function ProfileLinks() {
     const { pathname } = useLocation();
+
     const profileLinks = [
         {
             text: "Account",
@@ -19,7 +20,7 @@ function ProfileLinks() {
     ]
 
     return (
-        <div className="list-group col-3">
+        <div className="list-group col-3 position-fixed" style={{width: "12em"}}>
             {profileLinks.map((link, index) => {
                 var classNameStr = "list-group-item list-group-item-action list-group-item-success";
                 if ((pathname.includes(link.destination.split('/')[0]) && link.destination !== "/")) {

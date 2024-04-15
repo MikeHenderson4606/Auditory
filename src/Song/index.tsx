@@ -2,15 +2,13 @@ import { useState } from "react";
 import zbcover from '../media/ZBCover.png';
 
 import './index.css';
+import { AuditoryState } from "../store";
+import { useSelector } from "react-redux";
+import * as client from "../Client";
 
-function Song(props:any) {
+function Song({id, title, artist, poster, linkTo, description, isLiked}: {id:number, title: string, artist: string, poster: string, linkTo: string, description: string, isLiked:boolean}) {
+    const { userData } = useSelector((state:AuditoryState) => state.userDataReducer);
     const [play, setPlay] = useState(false);
-
-    const title = props.title;
-    const artist = props.artist;
-    const poster = props.poster;
-    const linkTo = props.link;
-    const description = props.description;
 
     function handlePlayPause() {
         setPlay(!play);
@@ -35,9 +33,22 @@ function Song(props:any) {
                         <a href={linkTo} target="_blank" className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} >
                             <i className="fa fa-share"></i>
                         </a>
-                        <a href={linkTo} target="_blank" className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} >
+                        {isLiked ? <button className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} onChange={e => {
+                            const unLikePost = async () => {
+                                
+                            }
+                        }}>
+                            <i className="fa fa-heart"></i>
+                        </button> :
+                        <button className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} onClick={e => {
+                            const likePost = async () => {
+                                client.likePost(userData.auditory.userId, id);
+                            }
+                            console.log("Liking post", id);
+                            likePost();
+                        }}>
                             <i className="fa fa-heart-o"></i>
-                        </a>
+                        </button>}
                     </div>
                 </nav>
             </div>

@@ -124,3 +124,34 @@ export const getLikedSongs = async () => {
         return 400; 
     }
 }
+
+export const getPostDetails = async (postId:string) => {
+    try {
+        const response = await api.get(`${API_BASE}/postdetails/${postId}`);
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}
+
+export const getGenericPosts = async () => {
+    try {
+        const response = await api.get(`${API_BASE}/genericposts`);
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}
+
+export const likePost = async (userId:number, postId:number) => {
+    try {
+        const response = await api.post(`${API_BASE}/likepost`, 
+        {
+            userId: userId,
+            postId: postId
+        });
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}

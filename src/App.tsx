@@ -15,6 +15,7 @@ import Post from './Post';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './App.css';
+import PostDetails from './PostDetails';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
                 <Route path="/" element={<GenericFeed />}></Route>
                 <Route path="messages/*" element={<Messenges />}></Route>
                 <Route path="post" element={<Post />}></Route>
+                <Route path="details/:postId" element={<PostDetails />}></Route>
               </Routes>
               </div>
             </div>

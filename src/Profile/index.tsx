@@ -22,7 +22,7 @@ function Profile() {
             <div style={{marginTop: "100px"}}>
                 <div className="row ms-3">
                     <ProfileLinks />
-                    <div className="col-9 bg-secondary-subtle p-2 border rounded">
+                    <div className="col-9 bg-secondary-subtle p-2 border rounded" style={{marginLeft: "200px"}}>
                         <Routes>
                             <Route path="/" element={
                                 <Navigate to='account/posts' />

@@ -1,59 +1,43 @@
 
 import Song from "../../../Song";
+import * as client from "../../../Client";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function Posts() {
-    const posts = [
-        {
-            title: 'Song1',
-            artist: 'Artist 1',
-            poster: 'Person 1',
-            description: 'Description 1',
-            link: 'https://www.spotify.com'
-        },
-        {
-            title: 'Song2',
-            artist: 'Artist 2',
-            poster: 'Person 2',
-            description: 'Description 2',
-            link: 'https://www.spotify.com'
-        },
-        {
-            title: 'Song3',
-            artist: 'Artist 3',
-            poster: 'Person 3',
-            description: 'Description 3',
-            link: 'https://www.spotify.com'
-        },
-        {
-            title: 'Song4',
-            artist: 'Artist 4',
-            poster: 'Person 4',
-            description: 'Description 4',
-            link: 'https://www.spotify.com'
-        },
-        {
-            title: 'Song5',
-            artist: 'Artist 5',
-            poster: 'Person 5',
-            description: 'Description 5',
-            link: 'https://www.spotify.com'
+    const [posts, setPosts] = useState<any>([]);
+    const [isLiked, setIsLiked] = useState(false);
+    const [userLikes, setUserLikes] = useState<any>([]);
+
+    useEffect(() => {
+        const getUserPosts = async () => {
+            const user = await client.getProfile();
+            setPosts(user.posts);
+            setUserLikes(user.likes);
         }
-    ]
+        getUserPosts();
+    }, []);
 
     return (
         <div>
             <h2 className="text-center">Your Posts</h2>
             <div>
                 <input placeholder="Search Posts" className="form-control" />
-                <button className="btn btn-success mt-1">
-                    New Post
-                </button>
+                <Link to="/post">
+                    <button className="btn btn-success mt-1">
+                        New Post
+                    </button>
+                </Link>
             </div> <br />
-            <div className="overflow-y-auto border border-light rounded bg-light" style={{height: "29em"}}>
-                {posts.map((post, index) => {
+            <div className="border border-light rounded bg-light">
+                {posts.map((post:any, index:number) => {
+                    let isLiked = false;
+                    if (userLikes.includes(post.id)) {
+                        isLiked = true;
+                    }
                     return (
                         <div className="p-3" key={index}>
-                            <Song title={post.title} artist={post.artist} poster={post.poster} link={post.link} description={post.description} />
+                            <Song id={post.id} title={post.title} artist={post.artist} poster={post.poster} linkTo={post.link} description={post.description} isLiked={isLiked} />
                         </div>
                     );
                 })}
