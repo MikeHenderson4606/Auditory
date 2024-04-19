@@ -19,7 +19,7 @@ function PostDetails() {
     }, []);
 
     return (
-        <div className="feed-offset bg-secondary border rounded p-3">
+        <div className="feed-offset bg-body-light border rounded p-3">
             <h1>Post Details for Post # {post.id}</h1>
             <Song id={post.id} title={post.title} artist={post.artist} poster={post.poster} linkTo={post.link} description={post.description} isLiked={false} />
         </div>

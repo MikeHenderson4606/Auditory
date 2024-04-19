@@ -1,12 +1,13 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { loginUser } from "../Client";
+import * as client from "../Client";
 import { Modal } from "react-bootstrap";
 import { setLoggedIn } from "./loginReducer";
 import { setUserData } from "./userDataReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { AuditoryState } from "../store";
+import { Link } from "react-router-dom";
 
 function Login() {
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ function Login() {
                         setPassword(e.target.value);
                     }} />
                     <button className="btn btn-success" onClick={async () => {
-                        const response = await loginUser({username: username, password:password});
+                        const response = await client.loginUser({username: username, password:password});
                         if (response !== 400) {
                             dispatch(setUserData({
                                 username: response.profile.username,
@@ -44,6 +45,11 @@ function Login() {
                             handleModalShow();
                         }
                     }}>Login</button>
+                    <Link to="/register">
+                        <button className="btn btn-info">
+                            Register
+                        </button>
+                    </Link>
                 </div>
             </div>
             <Modal show={showModal} onHide={handleModalShow}>

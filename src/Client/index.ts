@@ -28,6 +28,15 @@ export const logoutUser = async (userCredentials:any) => {
     }
 }
 
+export const registerUser = async (userCredentials:any) => {
+    try {
+        const response = await api.post(`${API_BASE}/register`, userCredentials)
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}
+
 export const getProfile = async () => {
     try {
         const response = await api.get(`${API_BASE}/profile`);

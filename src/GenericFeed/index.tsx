@@ -13,7 +13,7 @@ function GenericFeed() {
             setPosts(posts);
         }
         getGenericPosts();
-    })
+    }, []);
 
     return (
         <div className="feed-offset p-3">

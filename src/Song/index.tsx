@@ -5,6 +5,7 @@ import './index.css';
 import { AuditoryState } from "../store";
 import { useSelector } from "react-redux";
 import * as client from "../Client";
+import { Link } from "react-router-dom";
 
 function Song({id, title, artist, poster, linkTo, description, isLiked}: {id:number, title: string, artist: string, poster: string, linkTo: string, description: string, isLiked:boolean}) {
     const { userData } = useSelector((state:AuditoryState) => state.userDataReducer);
@@ -49,6 +50,12 @@ function Song({id, title, artist, poster, linkTo, description, isLiked}: {id:num
                         }}>
                             <i className="fa fa-heart-o"></i>
                         </button>}
+                        <Link to={`/details/${id}`}>
+                            <button className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}}>
+                                <i className="fa fa-info"></i>
+                            </button>
+                        </Link>
+                        
                     </div>
                 </nav>
             </div>
@@ -56,6 +63,7 @@ function Song({id, title, artist, poster, linkTo, description, isLiked}: {id:num
                 <img src={zbcover} width="80%" height="80%" className="img-thumbnail float-end border rounded" />
             </div>
         </div>
+        
     );
 }
 

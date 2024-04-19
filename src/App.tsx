@@ -12,6 +12,7 @@ import Profile from './Profile';
 import Login from './Login';
 import CurrentUser from './CurrentUser';
 import Post from './Post';
+import Register from './Register';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './App.css';
@@ -34,6 +35,7 @@ function App() {
               <Routes>
                 <Route path="profile/*" element={<Profile />}></Route>
                 <Route path="login" element={<Login />}></Route>
+                <Route path="register" element={<Register />}></Route>
                 <Route path="/" element={<GenericFeed />}></Route>
                 <Route path="messages/*" element={<Messenges />}></Route>
                 <Route path="post" element={<Post />}></Route>

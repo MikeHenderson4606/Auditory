@@ -6,13 +6,17 @@ import { Link } from "react-router-dom";
 
 function Posts() {
     const [posts, setPosts] = useState<any>([]);
-    const [isLiked, setIsLiked] = useState(false);
     const [userLikes, setUserLikes] = useState<any>([]);
 
     useEffect(() => {
         const getUserPosts = async () => {
             const user = await client.getProfile();
-            setPosts(user.posts);
+
+            const postDetailsPromise = await Promise.all(user.posts.map((postId:any) => {
+                return client.getPostDetails(postId);
+            }));
+
+            setPosts(postDetailsPromise);
             setUserLikes(user.likes);
         }
         getUserPosts();
