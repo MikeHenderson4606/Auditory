@@ -11,13 +11,16 @@ function Posts() {
     useEffect(() => {
         const getUserPosts = async () => {
             const user = await client.getProfile();
-
-            const postDetailsPromise = await Promise.all(user.posts.map((postId:any) => {
-                return client.getPostDetails(postId);
-            }));
-
-            setPosts(postDetailsPromise);
-            setUserLikes(user.likes);
+            console.log(user);
+            
+            if (user) {
+                const postDetailsPromise = await Promise.all(user.posts.map((postId:any) => {
+                    return client.getPostDetails(postId);
+                }));
+    
+                setPosts(postDetailsPromise);
+                setUserLikes(user.likes);
+            }
         }
         getUserPosts();
     }, []);

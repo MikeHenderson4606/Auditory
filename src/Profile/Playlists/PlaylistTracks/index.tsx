@@ -49,6 +49,7 @@ function PlaylistTracks() {
             if (response === 400) {
                 setModalText("There was an error playing the track. Please ensure Spotify is open, you are not listening along to anyone, and try again.");
                 setShowModal(!showModal);
+                setCurrentlyPlayingTrack("");
             }
         })
     }

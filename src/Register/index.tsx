@@ -53,6 +53,9 @@ function Register() {
                                 setError(response.message);
                                 handleModalShow();
                             }
+                        } else {
+                            setError("Username and password must be longer than 3 characters");
+                            handleModalShow();
                         }
                     }}>Register</button>
                     <Link to="/login">
