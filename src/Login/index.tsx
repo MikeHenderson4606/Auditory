@@ -24,15 +24,16 @@ function Login() {
 
     return (
         <div style={{marginTop: "100px"}}>
+            <h1 className='text-center'>Login to Auditory!</h1>
             <div className="d-flex justify-content-center">
-                <div className="bg-secondary border p-2 rounded" >
+                <div className="bg-light border p-2 rounded" >
                     <input className="form-control" placeholder="username" onChange={(e) => {
                         setUsername(e.target.value);
                     }} />
-                    <input className="form-control" placeholder="password" type="password" onChange={(e) => {
+                    <input className="form-control mt-2" placeholder="password" type="password" onChange={(e) => {
                         setPassword(e.target.value);
                     }} />
-                    <button className="btn btn-success" onClick={async () => {
+                    <button className="btn btn-success mt-2" onClick={async () => {
                         const response = await client.loginUser({username: username, password:password});
                         if (response !== 400) {
                             dispatch(setUserData({
@@ -45,11 +46,13 @@ function Login() {
                             handleModalShow();
                         }
                     }}>Login</button>
-                    <Link to="/register">
-                        <button className="btn btn-info">
+                    <p className="mt-4">
+                        Don't have an account? <br /> 
+                        Register here: 
+                        <Link to="/register">
                             Register
-                        </button>
-                    </Link>
+                        </Link>
+                    </p>
                 </div>
             </div>
             <Modal show={showModal} onHide={handleModalShow}>

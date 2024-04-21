@@ -24,19 +24,19 @@ function Register() {
 
     return(
         <div className="feed-offset">
-            <h1 className="d-flex justify-content-center">Register</h1>
+            <h1 className="d-flex justify-content-center">Register for Auditory!</h1>
             <div className="d-flex justify-content-center">
-                <div className="bg-secondary border p-2 rounded" >
-                    <input className="form-control" placeholder="username" onChange={(e) => {
+                <div className="bg-light border p-2 rounded" >
+                    <input className="form-control" placeholder="Username" onChange={(e) => {
                         setUsername(e.target.value);
                     }} />
-                    <input className="form-control mt-2" placeholder="password" type="password" onChange={(e) => {
+                    <input className="form-control mt-2" placeholder="Password" type="password" onChange={(e) => {
                         setPassword(e.target.value);
                     }} />
-                    <input className="form-control mt-2" placeholder="email" onChange={(e) => {
+                    <input className="form-control mt-2" placeholder="Email" onChange={(e) => {
                         setEmail(e.target.value);
                     }} />
-                    <input className="form-control mt-2" placeholder="phone number" onChange={(e) => {
+                    <input className="form-control mt-2" placeholder="Phone Number" onChange={(e) => {
                         setNumber(e.target.value);
                     }} />
                     <button className="btn btn-success mt-2" onClick={async () => {
@@ -58,11 +58,14 @@ function Register() {
                             handleModalShow();
                         }
                     }}>Register</button>
-                    <Link to="/login">
-                        <button className="btn btn-info ms-1 mt-2">
+                    <p className='mt-4'>
+                        Already have an account? <br /> 
+                        Login here: 
+                        <Link to="/login">
                             Login
-                        </button>
-                    </Link>
+                        </Link>
+                    </p>
+                    
                 </div>
             </div>
 

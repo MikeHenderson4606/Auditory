@@ -6,10 +6,12 @@ import { AuditoryState } from '../store';
 import * as client from '../Client';
 import { setLoggedIn } from '../Login/loginReducer';
 import { setUserData } from '../Login/userDataReducer';
+import { useNavigate } from 'react-router';
 
 function Navigation() {
     const [isCollapsed, setIsCollapsed] = useState(true);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { isLoggedIn } = useSelector((state:AuditoryState) => state.loginReducer);
     const { userData } = useSelector((state:AuditoryState) => state.userDataReducer);
     const isSpotLoggedIn = true;
@@ -48,6 +50,7 @@ function Navigation() {
 
     const logout = () => {
         client.logoutUser(userData);
+        navigate("/");
         alert("You have been successfull logged out");
     }
 
@@ -96,7 +99,7 @@ function Navigation() {
                                 );
                             } else {
                                 return (
-                                    <Link to={option.destination} className="nav-link fs-4 me-5" key={index}>{option.text}</Link>
+                                    <Link to={option.destination} className="nav-link fs-4 me-5 text-center" key={index}>{option.text}</Link>
                                 );
                             }
                         })}

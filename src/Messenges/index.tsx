@@ -7,7 +7,7 @@ import './index.css';
 
 function Messenges() {
     return (
-        <div className="feed-offset">
+        <div className="feed-offset ms-4">
             <div className="row messenger-style">
                 <div className="col-3 overflow-y-scroll pt-1 pb-1">
                     <UserContacts />

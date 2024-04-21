@@ -16,19 +16,23 @@ function GenericFeed() {
     }, []);
 
     return (
-        <div className="feed-offset p-3">
-            {posts.map((post:any, index:number) => {
-                let classNameVar = "";
-                if (index !== 0) {
-                    classNameVar = "mt-4"
-                }
-                return (
-                    <div className={classNameVar} key={index}>
-                        <Song id={post.id} title={post.title} artist={post.artist} poster={post.poster} linkTo={post.link} description={post.description} isLiked={false} />
-                    </div>
-                );
-            })}
+        <div>
+            <div className="feed-offset p-3 position-relative" style={{left: "100px"}}>
+                {posts.map((post:any, index:number) => {
+                    let classNameVar = "";
+                    if (index !== 0) {
+                        classNameVar = "mt-4"
+                    }
+                    return (
+                        <div className={classNameVar} key={index}>
+                            <Song id={post.id} title={post.title} artist={post.artist} poster={post.poster} linkTo={post.link} description={post.description} isLiked={false} />
+                        </div>
+                    );
+                })}
+            </div>
         </div>
+        
+        
     );
 }
 
