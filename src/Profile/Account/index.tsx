@@ -7,6 +7,7 @@ import Posts from "./Posts";
 import Likes from "./Likes";
 import Details from "./Details";
 import './index.css';
+import Following from "./Following";
 
 function Account() {
     const { pathname } = useLocation();
@@ -22,9 +23,13 @@ function Account() {
             text: 'Likes'
         },
         {
+            destination: 'following',
+            text: 'Following'
+        },
+        {
             destination: 'details',
             text: 'Details'
-        },
+        }
     ]
     
 
@@ -48,6 +53,7 @@ function Account() {
                 <Route path="posts" element={<Posts />}></Route>
                 <Route path="likes" element={<Likes />}></Route>
                 <Route path="details" element={<Details />}></Route>
+                <Route path="following" element={<Following />}></Route>
             </Routes>
         </div>
     );

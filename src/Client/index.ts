@@ -46,6 +46,15 @@ export const getProfile = async () => {
     }
 }
 
+export const getUser = async (userId:number) => {
+    try {
+        const response = await api.get(`${API_BASE}/user/${userId}`)
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}
+
 export const connectSpotifyUser = async () => {
     let codeVerifier = "";
     let codeChallenge = "";

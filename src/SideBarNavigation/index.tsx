@@ -2,9 +2,12 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
+import { useSelector } from "react-redux";
+import { AuditoryState } from "../store";
 
 function SideBarNavigation() {
     const { pathname } = useLocation();
+    const { isLoggedIn } = useSelector((state: AuditoryState) => state.loginReducer);
     const [isCollapsed, setIsCollapsed] = useState(true);
     let setPostActive = "";
     const navLocations = [
@@ -67,8 +70,8 @@ function SideBarNavigation() {
                         Post
                     </Link>
                 </div>
-                {pathname.split('/')[1].includes('profile') ? 
-                <div className="list-group position-fixed" style={{width: "12em", left: "10em"}}>
+                {pathname.split('/')[1].includes('profile') && isLoggedIn.auditory ? 
+                <div className={`list-group ${isCollapsed ? "ms-2" : ""}`} style={{width: "12em"}}>
                     {profileLinks.map((link, index) => {
                         var classNameStr = "list-group-item list-group-item-action list-group-item-success";
                         if ((pathname.includes(link.destination.split('/')[1]) && link.destination !== "/")) {
