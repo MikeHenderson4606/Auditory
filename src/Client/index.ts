@@ -2,14 +2,14 @@
 import axios from "axios";
 import generateCryptoKeys from "./crypto";
 
-const clientID = "08a8c25e8e4b41bba3e1b1e14e5dd2ee";
+const clientID = process.env.CLIENT_ID || "";
 const redirect_uri = "http://localhost:4000/api/spcallback";
 
 const api = axios.create({
     withCredentials: true
 });
 
-const API_BASE = "http://localhost:4000/api";
+const API_BASE = process.env.API_BASE;
 
 export const loginUser = async (userCredentials:any) => {
     try {
