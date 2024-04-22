@@ -173,3 +173,12 @@ export const likePost = async (userId:number, postId:number) => {
         return 400;
     }
 }
+
+export const searchPosts = async (query:string, postTitle:boolean, postArtist:boolean, postPoster:boolean) => {
+    try {
+        const response = await api.get(`${API_BASE}/searchposts/${query}/${postTitle}/${postArtist}/${postPoster}`);
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}

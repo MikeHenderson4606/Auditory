@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import zbcover from '../media/ZBCover.png';
 
 import './index.css';
@@ -7,20 +7,38 @@ import { useSelector } from "react-redux";
 import * as client from "../Client";
 import { Link } from "react-router-dom";
 
-function Song({id, title, artist, poster, linkTo, description, isLiked}: {id:number, title: string, artist: string, poster: string, linkTo: string, description: string, isLiked:boolean}) {
+function Song({id, title, artist, poster, posterId, linkTo, description}: {id:number, title: string, artist: string, poster: string, posterId:number, linkTo: string, description: string}) {
     const { userData } = useSelector((state:AuditoryState) => state.userDataReducer);
     const [play, setPlay] = useState(false);
+    const [likedPosts, setLikedPosts] = useState<any>([]);
 
     function handlePlayPause() {
         setPlay(!play);
     }
+
+    useEffect(() => {
+        const getIfLiked = async () => {
+            const response = await client.getProfile();
+            if (response) {
+                const likedPosts = response.likes;
+                setLikedPosts(likedPosts);
+            } else {
+                setLikedPosts([]);
+            }
+        }
+        getIfLiked();
+    })
 
     return (
         <div className="border border-secondary rounded row bg-success-subtle">
             <div className="col-9">
                 <h4 className="text-center mt-2">{title}</h4>
                 <h5 className="text-center">{artist}</h5>
-                <h5 className="text-center">{poster}</h5>
+                <h5 className="text-center">
+                    <Link to={`/user/${posterId}`} className="btn btn-outline-success" style={{border: "none"}}>
+                        {poster}
+                    </Link>
+                </h5>
                 <h6 className="text-center">{description}</h6>
                 <nav className="navbar">
                     <div className="container-fluid justify-content-center">
@@ -34,7 +52,7 @@ function Song({id, title, artist, poster, linkTo, description, isLiked}: {id:num
                         <a href={linkTo} target="_blank" className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} >
                             <i className="fa fa-share"></i>
                         </a>
-                        {isLiked ? <button className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} onChange={e => {
+                        {likedPosts.includes(id) ? <button className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} onChange={e => {
                             const unLikePost = async () => {
                                 
                             }

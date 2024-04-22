@@ -25,7 +25,7 @@ function GenericFeed() {
                     }
                     return (
                         <div className={classNameVar} key={index}>
-                            <Song id={post.id} title={post.title} artist={post.artist} poster={post.poster} linkTo={post.link} description={post.description} isLiked={false} />
+                            <Song id={post.id} title={post.title} artist={post.artist} poster={post.poster} posterId={post.posterId} linkTo={post.link} description={post.description} />
                         </div>
                     );
                 })}

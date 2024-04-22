@@ -44,7 +44,7 @@ function Post() {
 
     const LoggedInComponent = () => {
         return (
-            <div className="feed-offset">
+            <div className="feed-offset ms-3">
                 <h1>Post</h1>
                 <form>
                     <div className="mb-3">
@@ -53,7 +53,7 @@ function Post() {
                         }}>
                             Attach Song
                         </button>
-                        {selectedSong ? 
+                        {selectedSong.track ? 
                             <button className="btn btn-outline-danger float-end" style={{border: 'none'}} onClick={(e) => {
                                 setSelectedSong({})
                             }}>

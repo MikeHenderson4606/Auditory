@@ -11,7 +11,6 @@ function Posts() {
     useEffect(() => {
         const getUserPosts = async () => {
             const user = await client.getProfile();
-            console.log(user);
             
             if (user) {
                 const postDetailsPromise = await Promise.all(user.posts.map((postId:any) => {
@@ -36,15 +35,15 @@ function Posts() {
                     </button>
                 </Link>
             </div> <br />
-            <div className="border border-light rounded bg-light">
+            <div className="list-group">
                 {posts.map((post:any, index:number) => {
                     let isLiked = false;
                     if (userLikes.includes(post.id)) {
                         isLiked = true;
                     }
                     return (
-                        <div className="p-3" key={index}>
-                            <Song id={post.id} title={post.title} artist={post.artist} poster={post.poster} linkTo={post.link} description={post.description} isLiked={isLiked} />
+                        <div className="list-group-item list-group-item-light" key={index}>
+                            <Song id={post.id} title={post.title} artist={post.artist} poster={post.poster} posterId={post.posterId} linkTo={post.link} description={post.description} />
                         </div>
                     );
                 })}

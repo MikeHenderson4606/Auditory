@@ -12,7 +12,6 @@ function Following() {
             const follows = await Promise.all(profile.follows.map((userId:number) => {
                 return client.getUser(userId);
             }));
-            console.log(follows);
             setFollows(follows);
         }
         getUserFollows();
@@ -24,10 +23,8 @@ function Following() {
             <div className="list-group">
                 {follows.length > 0 ? follows.map((follow:any, index:number) => {
                     return (
-                    <Link to={`/user/${follow.user.userId}`} className="text-decoration-none" key={index}>
-                        <div className="list-group-item list-group-item-action list-group-item-light">
-                            {follow.user.username}
-                        </div>
+                    <Link to={`/user/${follow.user.userId}`} className="list-group-item list-group-item-action list-group-item-light text-decoration-none" key={index}>
+                        {follow.user.username}
                     </Link>
                     );
                 }) : 
