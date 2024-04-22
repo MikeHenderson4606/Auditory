@@ -6,9 +6,10 @@ const api = axios.create({
     withCredentials: true
 });
 
-const API_BASE = process.env.API_BASE;
-const clientID = process.env.CLIENT_ID || "";
-const redirect_uri = `${API_BASE}/spcallback`;
+export const API_BASE = process.env.REACT_APP_API_BASE;
+console.log(API_BASE);
+export const clientID = process.env.REACT_APP_CLIENT_ID || "";
+export const redirect_uri = `${API_BASE}/spcallback`;
 
 export const loginUser = async (userCredentials:any) => {
     try {
