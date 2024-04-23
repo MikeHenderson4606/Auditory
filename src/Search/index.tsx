@@ -118,7 +118,7 @@ function Search() {
                         {results.map((result:any) => {
                             return (
                                 <div className="list-group-item">
-                                    <Song id={result.id} title={result.title} artist={result.title} poster={result.poster} posterId={result.posterId} linkTo={result.linkTo} description={result.description} />
+                                    <Song id={result.id} title={result.title} artist={result.artist} poster={result.poster} posterId={result.posterId} linkTo={result.linkTo} description={result.description} />
                                 </div>
                             );
                         })}
