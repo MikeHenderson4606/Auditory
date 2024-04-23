@@ -36,8 +36,8 @@ function Likes() {
                     );
                 })}
             </div> :
-            <div> 
-                This user has no liked posts.
+            <div className="text-center"> 
+                You have no liked posts.
             </div>}
         </div>
         

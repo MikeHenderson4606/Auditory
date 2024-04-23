@@ -19,7 +19,7 @@ function Following() {
 
     return (
         <div>
-            <h2 className="text-center">Following</h2>
+            <h2 className="text-center">Followed Users</h2>
             <div className="list-group">
                 {follows.length > 0 ? follows.map((follow:any, index:number) => {
                     return (

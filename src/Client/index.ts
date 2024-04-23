@@ -161,6 +161,15 @@ export const getGenericPosts = async () => {
     }
 }
 
+export const getPersonalPosts = async () => {
+    try {
+        const response = await api.get(`${API_BASE}/personalposts`);
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}
+
 export const likePost = async (userId:number, postId:number) => {
     try {
         const response = await api.post(`${API_BASE}/likepost`, 
@@ -179,6 +188,24 @@ export const searchPosts = async (query:string, postTitle:boolean, postArtist:bo
         const response = await api.get(`${API_BASE}/searchposts/${query}/${postTitle}/${postArtist}/${postPoster}`);
         return response.data;
     } catch (err) {
+        return 400;
+    }
+}
+
+export const searchUsers = async (query:string, userUsername:boolean, userUserId:boolean) => {
+    try {
+        const response = await api.get(`${API_BASE}/searchusers/${query}/${userUsername}/${userUserId}`);
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}
+
+export const searchSongs = async (query:string) => {
+    try {
+        const response = await api.get(`${API_BASE}/searchsongs/${query}`);
+        return response.data;
+    } catch(err) {
         return 400;
     }
 }

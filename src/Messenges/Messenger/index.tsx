@@ -212,7 +212,9 @@ function Message() {
                             <button className={activeTab === "search" ? "nav-link active" : "nav-link"} onClick={showSearchOptions}>From Search</button>
                         </li>
                     </ul>
-                    {showProfileSearch ? <ProfileSearchComponent selectedSong={selectedSong} selectedPlaylist={selectedPlaylist} setSelectedSong={setSelectedSong} setSelectedPlaylist={setSelectedPlaylist} /> : <SearchComponent />}
+                    {showProfileSearch ? 
+                        <ProfileSearchComponent selectedSong={selectedSong} selectedPlaylist={selectedPlaylist} setSelectedSong={setSelectedSong} setSelectedPlaylist={setSelectedPlaylist} /> : 
+                        <SearchComponent selectedSong={selectedSong} selectedPlaylist={selectedPlaylist} setSelectedSong={setSelectedSong} setSelectedPlaylist={setSelectedPlaylist} />}
                 </Modal.Body>
                 <Modal.Footer>
                     <button className='btn btn-danger' onClick={() => {

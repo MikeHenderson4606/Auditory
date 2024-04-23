@@ -2,10 +2,9 @@
 import React from 'react';
 import { HashRouter, useNavigate } from 'react-router-dom';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './store';
+import { Provider, useSelector } from 'react-redux';
+import store, { AuditoryState } from './store';
 import Navigation from './Navigation';
-import GenericFeed from './GenericFeed';
 import Messenges from './Messenges';
 import SideBarNavigation from './SideBarNavigation';
 import Profile from './Profile';
@@ -17,8 +16,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './App.css';
 import PostDetails from './PostDetails';
-import User from './User';
 import Search from './Search';
+import Feed from './Feed';
+import User from './User';
 
 function App() {
   return (
@@ -38,12 +38,12 @@ function App() {
                 <Route path="profile/*" element={<Profile />}></Route>
                 <Route path="login" element={<Login />}></Route>
                 <Route path="register" element={<Register />}></Route>
-                <Route path="/" element={<GenericFeed />}></Route>
+                <Route path="/" element={<Feed />}></Route>
                 <Route path="messages/*" element={<Messenges />}></Route>
                 <Route path="post" element={<Post />}></Route>
                 <Route path="details/:postId" element={<PostDetails />}></Route>
-                <Route path="user/:userId" element={<User />}></Route>
                 <Route path="search" element={<Search />}></Route>
+                  <Route path="user/:userId" element={<User />}></Route>
               </Routes>
               </div>
             </div>

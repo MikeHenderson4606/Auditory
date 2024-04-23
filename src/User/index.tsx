@@ -9,6 +9,7 @@ function User() {
     const [user, setUser] = useState<any>({});
     const [follows, setFollows] = useState<any>([]);
     const [likes, setLikes] = useState<any>([]);
+    const [isFollowingUser, setIsFollowingUser] = useState<boolean>(false);
 
     const setFollowData = async (userIds: number[]) => {
         const follows = await Promise.all(userIds.map((userId:any) => {
@@ -22,6 +23,18 @@ function User() {
             return client.getPostDetails(postId);
         }))
         setLikes(likes);
+    }
+
+    const getIsFollowing = async () => {
+        const thisUser = await client.getProfile();
+        console.log(thisUser);
+        if (userId && thisUser) {
+            if (thisUser.follows.includes(parseInt(userId)) || thisUser.userId === parseInt(userId)) {
+                setIsFollowingUser(true);
+            } else {
+                setIsFollowingUser(false);
+            }
+        }
     }
 
     useEffect(() => {
@@ -38,16 +51,20 @@ function User() {
                     setFollows([]);
                 }
             }
+            getIsFollowing();
         }
         getUserDetails();
     }, [userId]);
 
     return (user ? 
         <div className="feed-offset ms-5">
-            <h1 className="text-center">
-                {user.username}
-            </h1>
-            <div className="border border-success rounded p-2">
+            <div className="p-3 border border-success rounded">
+                <h2>{user.username}</h2>
+                <button disabled={isFollowingUser} className="btn btn-success">
+                    Follow User
+                </button>
+            </div>
+            <div className="border border-success rounded p-2 mt-3">
                 <h2>Following: </h2>
                 {follows.length > 1 ? <div className="list-group">
                     {follows.map((follow:any, index:number) => {

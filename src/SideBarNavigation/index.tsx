@@ -70,7 +70,7 @@ function SideBarNavigation() {
                         Post
                     </Link>
                 </div>
-                {pathname.split('/')[1].includes('profile') && isLoggedIn.auditory ? 
+                {pathname.split('/')[1].includes('profile') && isLoggedIn.auditory && !parseInt(pathname.split('/')[2]) ? 
                 <div className={`list-group ${isCollapsed ? "ms-2" : ""}`} style={{width: "12em"}}>
                     {profileLinks.map((link, index) => {
                         var classNameStr = "list-group-item list-group-item-action list-group-item-success";

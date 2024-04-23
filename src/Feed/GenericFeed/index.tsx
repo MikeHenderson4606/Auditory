@@ -1,6 +1,6 @@
 
-import Song from "../Song";
-import * as client from "../Client";
+import Song from "../../Song";
+import * as client from "../../Client";
 import { useEffect, useState } from "react";
 
 function GenericFeed() {
@@ -31,8 +31,6 @@ function GenericFeed() {
                 })}
             </div>
         </div>
-        
-        
     );
 }
 
