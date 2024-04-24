@@ -6,14 +6,16 @@ export interface AuditoryState {
   loginReducer: {
     isLoggedIn: {
       auditory: boolean,
-      spotify: boolean
+      spotify: boolean,
+      admin: boolean
     };
   },
   userDataReducer: {
     userData: {
       auditory: {
         username: string,
-        userId: number
+        userId: number,
+        likedPosts: number[]
       },
       spotify: {
         accessToken: string,

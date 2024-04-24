@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import * as client from '../Client';
 import Song from "../Song";
+import { AuditoryState } from "../store";
 
 function User() {
     const { userId } = useParams();
+    const { isLoggedIn } = useSelector((state:AuditoryState) => state.loginReducer);
     const [user, setUser] = useState<any>({});
     const [follows, setFollows] = useState<any>([]);
     const [likes, setLikes] = useState<any>([]);
@@ -34,6 +37,8 @@ function User() {
             } else {
                 setIsFollowingUser(false);
             }
+        } else {
+            setIsFollowingUser(true);
         }
     }
 
@@ -85,7 +90,7 @@ function User() {
                     {likes.map((like:any, index:number) => {
                         return (
                         <div className="list-group-item list-group-item-light" key={index}>
-                            <Song id={like.id} title={like.title} artist={like.artist} poster={like.poster} posterId={like.posterId} linkTo={like.linkTo} description={like.description} />
+                            <Song song={like} />
                         </div>
                         );
                     })}

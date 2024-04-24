@@ -4,7 +4,8 @@ const initialState = {
     userData: {
         auditory: {
             username: "",
-            userId: ""
+            userId: "",
+            likedPosts: []
         },
         spotify: {
             accessToken: "",
@@ -23,7 +24,8 @@ const userDataSlice = createSlice({
         setUserData: (state, action) => {
             state.userData.auditory = {
                 username: action.payload.username,
-                userId: action.payload.userId
+                userId: action.payload.userId,
+                likedPosts: action.payload.likes
             };
         },
         setSpotifyUserData: (state, action) => {

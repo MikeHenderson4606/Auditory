@@ -12,6 +12,7 @@ function Search() {
     const [currentlyPlayingTrack, setCurrentlyPlayingTrack] = useState("");
     const [modalText, setModalText] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [likedPosts, setLikedPosts] = useState<number[]>([]);
     const [limit, setLimit] = useState<number>(20);
 
     const handleModalShow = () => {
@@ -50,7 +51,7 @@ function Search() {
                         {results.map((result:any, index:number) => {
                             return (
                                 <div className="list-group-item" key={index}>
-                                    <Song id={result.id} title={result.title} artist={result.artist} poster={result.poster} posterId={result.posterId} linkTo={result.linkTo} description={result.description} />
+                                    <Song song={result} />
                                 </div>
                             );
                         })}
@@ -198,7 +199,16 @@ function Search() {
     }
 
     useEffect(() => {
-
+        const getIfLiked = async () => {
+            const response = await client.getProfile();
+            if (response) {
+                const likedPosts = response.likes;
+                setLikedPosts(likedPosts);
+            } else {
+                setLikedPosts([]);
+            }
+        }
+        getIfLiked();
     }, [results]);
 
     return (

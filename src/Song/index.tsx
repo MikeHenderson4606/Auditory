@@ -7,27 +7,21 @@ import { useSelector } from "react-redux";
 import * as client from "../Client";
 import { Link } from "react-router-dom";
 
-function Song({id, title, artist, poster, posterId, linkTo, description}: {id:number, title: string, artist: string, poster: string, posterId:number, linkTo: string, description: string}) {
+function Song({song}: {song:any}) {
+    const id = song.id;
+    const title = song.title;
+    const artist = song.artist;
+    const poster = song.poster;
+    const posterId = song.posterId;
+    const spotifyId = song.spotifyId;
+    const cover = song.cover;
+    const description = song.description;
     const { userData } = useSelector((state:AuditoryState) => state.userDataReducer);
     const [play, setPlay] = useState(false);
-    const [likedPosts, setLikedPosts] = useState<any>([]);
 
     function handlePlayPause() {
         setPlay(!play);
     }
-
-    useEffect(() => {
-        const getIfLiked = async () => {
-            const response = await client.getProfile();
-            if (response) {
-                const likedPosts = response.likes;
-                setLikedPosts(likedPosts);
-            } else {
-                setLikedPosts([]);
-            }
-        }
-        getIfLiked();
-    })
 
     return (
         <div className="border border-secondary rounded row bg-success-subtle">
@@ -49,10 +43,7 @@ function Song({id, title, artist, poster, posterId, linkTo, description}: {id:nu
                         <button className="btn btn-outline-success no-border" style={{border: "none"}} onClick={() => handlePlayPause()}>
                             <i className="fa fa-play-circle fa-2x"></i>
                         </button>}
-                        <a href={linkTo} target="_blank" className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} >
-                            <i className="fa fa-share"></i>
-                        </a>
-                        {likedPosts.includes(id) ? <button className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} onChange={e => {
+                        {userData.auditory.likedPosts && userData.auditory.likedPosts.includes(id) ? <button className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} onChange={e => {
                             const unLikePost = async () => {
                                 
                             }
@@ -78,7 +69,7 @@ function Song({id, title, artist, poster, posterId, linkTo, description}: {id:nu
                 </nav>
             </div>
             <div className="col-3 p-0">
-                <img src={zbcover} width="80%" height="80%" className="img-thumbnail float-end border rounded" />
+                <img src={cover} width="80%" height="80%" className="img-thumbnail float-end border rounded" />
             </div>
         </div>
         

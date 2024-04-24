@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuditoryState } from '../store';
 import { setSpotifyUserData, setUserData } from '../Login/userDataReducer';
-import { setLoggedIn, setSpotifyLoggedIn } from '../Login/loginReducer';
+import { setLoggedIn, setSpotifyLoggedIn, setAdmin } from '../Login/loginReducer';
 
 function CurrentUser({ children }: { children:any }) {
     const dispatch = useDispatch();
@@ -47,10 +47,9 @@ function CurrentUser({ children }: { children:any }) {
 
         try {
             console.log("Checking if the user is signed into auditory");
-            const currentUser = await client.getProfile();
-            if (currentUser) {
-                console.log("User is logged in");
-                dispatch(setUserData(currentUser));
+            const auditoryUser = await client.getProfile();
+            if (auditoryUser) {
+                dispatch(setUserData(auditoryUser));
                 dispatch(setLoggedIn(true));
             } else {
                 console.log("User is not logged in");
@@ -64,6 +63,7 @@ function CurrentUser({ children }: { children:any }) {
     useEffect(() => {
         fetchCurrentUser();
     }, []);
+
     return children;
 }
 

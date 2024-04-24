@@ -3,7 +3,9 @@ import Song from "../../Song";
 import * as client from '../../Client';
 
 function PersonalFeed() {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState<any>([]);
+    const [firstLoad, setFirstLoad] = useState(true);
+    const [likedPosts, setLikedPosts] = useState<number[]>([]);
 
     useEffect(() => {
         const getPersonalPosts = async () => {
@@ -15,11 +17,14 @@ function PersonalFeed() {
                     const posts = await client.getGenericPosts();
                     setPosts(posts);
                 }
+                setFirstLoad(false);
             } catch (err) {
                 setPosts([]);
             }
         }
-        getPersonalPosts();
+        if (firstLoad) {
+            getPersonalPosts();
+        }
     });
 
     return (
@@ -32,7 +37,7 @@ function PersonalFeed() {
                     }
                     return (
                         <div className={classNameVar} key={index}>
-                            <Song id={post.id} title={post.title} artist={post.artist} poster={post.poster} posterId={post.posterId} linkTo={post.link} description={post.description} />
+                            <Song song={post} />
                         </div>
                     );
                 })}

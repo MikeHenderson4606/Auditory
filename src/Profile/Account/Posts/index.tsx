@@ -43,7 +43,7 @@ function Posts() {
                     }
                     return (
                         <div className="list-group-item list-group-item-light" key={index}>
-                            <Song id={post.id} title={post.title} artist={post.artist} poster={post.poster} posterId={post.posterId} linkTo={post.link} description={post.description} />
+                            <Song song={post} />
                         </div>
                     );
                 })}

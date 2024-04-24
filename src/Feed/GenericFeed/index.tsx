@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 
 function GenericFeed() {
     const [posts, setPosts] = useState<any>([]);
-    const [userLikes, setUserLikes] = useState<any>([]);
+    const [cover, setCover] = useState<any>([]);
 
     useEffect(() => {
         const getGenericPosts = async () => {
             const posts = await client.getGenericPosts();
             setPosts(posts);
+            console.log(posts);
         }
         getGenericPosts();
     }, []);
@@ -25,7 +26,7 @@ function GenericFeed() {
                     }
                     return (
                         <div className={classNameVar} key={index}>
-                            <Song id={post.id} title={post.title} artist={post.artist} poster={post.poster} posterId={post.posterId} linkTo={post.link} description={post.description} />
+                            <Song song={post} />
                         </div>
                     );
                 })}

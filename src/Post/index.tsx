@@ -18,6 +18,7 @@ function Post() {
     const [showProfileSearch, setShowProfileSearch] = useState(true);
     const [selectedPlaylist, setSelectedPlaylist] = useState<any>({});
     const [selectedSong, setSelectedSong] = useState<any>({});
+    const [description, setDescription] = useState("");
 
     const handleModalShow = () => {
         setShowModal(!showModal);
@@ -31,6 +32,28 @@ function Post() {
     const showSearchOptions = () => {
         setShowProfileSearch(false);
         setActiveTab("search");
+    }
+
+    const createPost = async () => {
+        const user = await client.getProfile();
+        const id = Date.now();
+        const post = {
+            title: selectedSong.track.name,
+            artist: selectedSong.track.artists[0].name,
+            poster: user.username,
+            posterId: user.userId,
+            description: description,
+            id: id,
+            likedBy: [{}],
+            spotifyId: selectedSong.track.id,
+            cover: selectedSong.track.album.images[0].url
+        };
+        const userPosts = user.posts;
+        userPosts.push(id);
+
+        const dbUser = await client.getUser(user.userId);
+        console.log(userPosts);
+        await client.createPost(post, userPosts, dbUser._id);
     }
     
     const NotLoggedInComponent = () => {
@@ -65,14 +88,13 @@ function Post() {
                     {selectedSong.track ? 
                         <div>
                             <SongDM title={selectedSong.track.name} artist={selectedSong.track.artists[0].name} link={"selectedSong.external_urls[0].spotify"} id={selectedSong.track.id} />
-                            
                         </div> : 
                         <div></div>}
                     <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">Post Description</label>
+                        <label htmlFor="exampleInputEmail1" className="form-label" onChange={(e:any) => setDescription(e.target.value)}>Post Description</label>
                         <textarea className="form-control" id="exampleInputEmail1" placeholder="Optional"/>
                     </div>
-                    <button type="submit" className="btn btn-success">Post</button>
+                    <button type="button" className="btn btn-success" onClick={createPost}>Post</button>
                 </form>
                 <Modal show={showModal} onHide={handleModalShow}>
                     <Modal.Header closeButton>

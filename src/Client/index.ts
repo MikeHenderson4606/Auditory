@@ -183,6 +183,33 @@ export const likePost = async (userId:number, postId:number) => {
     }
 }
 
+export const deletePost = async (postId:number, userPosts:number[]) => {
+    try {
+        const response = await api.delete(`${API_BASE}/deletepost`, {
+            data: {
+                    postId: postId,
+                    userPosts: userPosts
+                }
+        });
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}
+
+export const createPost = async (post:any, userPosts:number[], userId:string) => {
+    try {
+        const response = await api.post(`${API_BASE}/createpost`, {
+            post,
+            userPosts: userPosts,
+            userId: userId
+        });
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}
+
 export const searchPosts = async (query:string, postTitle:boolean, postArtist:boolean, postPoster:boolean) => {
     try {
         const response = await api.get(`${API_BASE}/searchposts/${query}/${postTitle}/${postArtist}/${postPoster}`);
@@ -206,6 +233,15 @@ export const searchSongs = async (query:string) => {
         const response = await api.get(`${API_BASE}/searchsongs/${query}`);
         return response.data;
     } catch(err) {
+        return 400;
+    }
+}
+
+export const getComments = async (postId:string) => {
+    try {
+        const response = await api.get(`${API_BASE}/comments/${postId}`);
+        return response.data;
+    } catch (err) {
         return 400;
     }
 }

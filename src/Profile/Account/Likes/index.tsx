@@ -31,7 +31,7 @@ function Likes() {
             {likes.map((like:any, index:number) => {
                     return (
                     <div className="list-group-item list-group-item-light" key={index}>
-                        <Song id={like.id} title={like.title} artist={like.artist} poster={like.poster} posterId={like.posterId} linkTo={like.linkTo} description={like.description} />
+                        <Song song={like} />
                     </div>
                     );
                 })}
