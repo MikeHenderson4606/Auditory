@@ -43,7 +43,7 @@ function App() {
                 <Route path="post" element={<Post />}></Route>
                 <Route path="details/:postId" element={<PostDetails />}></Route>
                 <Route path="search" element={<Search />}></Route>
-                  <Route path="user/:userId" element={<User />}></Route>
+                <Route path="user/:userId" element={<User />}></Route>
               </Routes>
               </div>
             </div>

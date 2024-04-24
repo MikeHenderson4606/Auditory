@@ -170,12 +170,12 @@ export const getPersonalPosts = async () => {
     }
 }
 
-export const likePost = async (userId:number, postId:number) => {
+export const likePost = async (userId:string, likes:number[]) => {
     try {
         const response = await api.post(`${API_BASE}/likepost`, 
         {
             userId: userId,
-            postId: postId
+            likes: likes
         });
         return response.data;
     } catch (err) {
@@ -183,16 +183,18 @@ export const likePost = async (userId:number, postId:number) => {
     }
 }
 
-export const deletePost = async (postId:number, userPosts:number[]) => {
+export const deletePost = async (postId:number, userPosts:number[], userId:string) => {
     try {
         const response = await api.delete(`${API_BASE}/deletepost`, {
             data: {
                     postId: postId,
-                    userPosts: userPosts
+                    userPosts: userPosts,
+                    userId: userId
                 }
         });
         return response.data;
     } catch (err) {
+        console.log(err);
         return 400;
     }
 }
@@ -228,6 +230,22 @@ export const searchUsers = async (query:string, userUsername:boolean, userUserId
     }
 }
 
+export const updateUser = async(userId:string, username:string, email:string, number:number) => {
+    try {
+        const response = await api.put(`${API_BASE}/updateuser`, {
+            data: {
+                userId: userId,
+                username: username,
+                email: email,
+                number: number
+            }
+        });
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}
+
 export const searchSongs = async (query:string) => {
     try {
         const response = await api.get(`${API_BASE}/searchsongs/${query}`);
@@ -240,6 +258,19 @@ export const searchSongs = async (query:string) => {
 export const getComments = async (postId:string) => {
     try {
         const response = await api.get(`${API_BASE}/comments/${postId}`);
+        return response.data;
+    } catch (err) {
+        return 400;
+    }
+}
+
+export const deleteUser = async (userId:string) => {
+    try {
+        const response = await api.delete(`${API_BASE}/deleteuser`, {
+            data: {
+                userId: userId
+            }
+        });
         return response.data;
     } catch (err) {
         return 400;

@@ -18,10 +18,34 @@ function Song({song}: {song:any}) {
     const description = song.description;
     const { userData } = useSelector((state:AuditoryState) => state.userDataReducer);
     const [play, setPlay] = useState(false);
+    let likedPosts:any;
 
     function handlePlayPause() {
         setPlay(!play);
     }
+
+    const getUserId = async () => {
+        if (userData.auditory.userId) {
+            const user = await client.getUser(userData.auditory.userId);
+            return user.user;
+        } else {
+            return;
+        }
+    }
+
+    useEffect(() => {
+        const getUser = async () => {
+            if (userData.auditory.userId) {
+                const user = await client.getUser(userData.auditory.userId);
+                if (user.user.likes) {
+                    likedPosts = user.user.likes;
+                }
+            }
+            
+            console.log(likedPosts && likedPosts.includes(id));
+        }
+        getUser();
+    }, [likedPosts]);
 
     return (
         <div className="border border-secondary rounded row bg-success-subtle">
@@ -43,18 +67,17 @@ function Song({song}: {song:any}) {
                         <button className="btn btn-outline-success no-border" style={{border: "none"}} onClick={() => handlePlayPause()}>
                             <i className="fa fa-play-circle fa-2x"></i>
                         </button>}
-                        {userData.auditory.likedPosts && userData.auditory.likedPosts.includes(id) ? <button className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} onChange={e => {
-                            const unLikePost = async () => {
-                                
-                            }
-                        }}>
+                        {(likedPosts && likedPosts.includes(id)) ? <button className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} >
                             <i className="fa fa-heart"></i>
                         </button> :
                         <button className="btn btn-outline-success fs-4 ms-2" style={{border: "none"}} onClick={e => {
-                            const likePost = async () => {
-                                client.likePost(userData.auditory.userId, id);
-                            }
                             console.log("Liking post", id);
+                            const likePost = async () => {
+                                const user = await getUserId();
+                                const likes = user.likes;
+                                likes.push(id);
+                                client.likePost(user._id, likes);
+                            }
                             likePost();
                         }}>
                             <i className="fa fa-heart-o"></i>

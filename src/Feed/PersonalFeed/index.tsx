@@ -11,6 +11,7 @@ function PersonalFeed() {
         const getPersonalPosts = async () => {
             try {
                 const posts = await client.getPersonalPosts();
+                console.log(posts);
                 if (posts.length > 0) {
                     setPosts(posts);
                 } else {

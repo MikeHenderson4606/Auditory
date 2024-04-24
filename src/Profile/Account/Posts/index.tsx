@@ -16,6 +16,7 @@ function Posts() {
                 const postDetailsPromise = await Promise.all(user.posts.map((postId:any) => {
                     return client.getPostDetails(postId);
                 }));
+                console.log(user);
     
                 setPosts(postDetailsPromise);
                 setUserLikes(user.likes);

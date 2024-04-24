@@ -18,7 +18,7 @@ function PostDetails() {
     const deletePost = async () => {
         if (postId) {
             const poster = await client.getUser(post.posterId);
-            await client.deletePost(parseInt(postId), poster.user.posts);
+            await client.deletePost(parseInt(postId), poster.user.posts, poster.user._id);
             navigate('/');
         }
     }

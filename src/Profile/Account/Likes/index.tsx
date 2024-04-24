@@ -18,6 +18,7 @@ function Likes() {
             const user = await client.getProfile();
 
             if (user) {
+                console.log(user);
                 setLikedPostData(user.likes);
             }
         }
@@ -27,7 +28,7 @@ function Likes() {
     return (
         <div>
             <h2 className="text-center">Your Liked Posts</h2>
-            {likes.length > 1 ? <div className="list-group">
+            {likes.length > 0 ? <div className="list-group">
             {likes.map((like:any, index:number) => {
                     return (
                     <div className="list-group-item list-group-item-light" key={index}>

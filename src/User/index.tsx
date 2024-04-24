@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import * as client from '../Client';
 import Song from "../Song";
@@ -13,6 +13,8 @@ function User() {
     const [follows, setFollows] = useState<any>([]);
     const [likes, setLikes] = useState<any>([]);
     const [isFollowingUser, setIsFollowingUser] = useState<boolean>(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const navigate = useNavigate();
 
     const setFollowData = async (userIds: number[]) => {
         const follows = await Promise.all(userIds.map((userId:any) => {
@@ -26,6 +28,20 @@ function User() {
             return client.getPostDetails(postId);
         }))
         setLikes(likes);
+    }
+
+    const deleteUser = async () => {
+        if (userId) {
+            const user = await client.getUser(parseInt(userId));
+            const posts = user.user.posts;
+            
+            await Promise.all(posts.map((post:any) => {
+                console.log(post, posts, user.user._id);
+                client.deletePost(post, posts, user.user._id);
+            }))
+            await client.deleteUser(user.user._id);
+            navigate('/');
+        }
     }
 
     const getIsFollowing = async () => {
@@ -46,6 +62,14 @@ function User() {
         const getUserDetails = async () => {
             if (userId) {
                 const user = await client.getUser(parseInt(userId));
+                const currentUser = await client.getProfile();
+                if (currentUser) {
+                    if (currentUser.role === "ADMIN") {
+                        setIsAdmin(true);
+                    } else {
+                        setIsAdmin(false);
+                    }
+                }
 
                 if (user.code === 200) {
                     setUser(user.user);
@@ -68,10 +92,16 @@ function User() {
                 <button disabled={isFollowingUser} className="btn btn-success">
                     Follow User
                 </button>
+                {isAdmin ? 
+                <button className="btn btn-danger ms-2" onClick={(e:any) => {
+                    deleteUser();
+                }}>
+                    Delete User
+                </button> : <div></div>}
             </div>
             <div className="border border-success rounded p-2 mt-3">
                 <h2>Following: </h2>
-                {follows.length > 1 ? <div className="list-group">
+                {follows.length > 0 ? <div className="list-group">
                     {follows.map((follow:any, index:number) => {
                         return (
                         <Link to={`/user/${follow.user.userId}`} className="list-group-item list-group-item-action list-group-item-light text-decoration-none" key={index}>
@@ -86,7 +116,8 @@ function User() {
             </div>
             <div className="border border-success rounded p-2 mt-3">
                 <h2>Liked Posts: </h2>
-                {likes.length > 1 ? <div className="list-group">
+                {likes.length > 0 ? 
+                <div className="list-group">
                     {likes.map((like:any, index:number) => {
                         return (
                         <div className="list-group-item list-group-item-light" key={index}>
